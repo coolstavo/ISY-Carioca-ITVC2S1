@@ -18,19 +18,19 @@ public class Ship {
 
     private Board Board;
 
-
-
+    //---------------------------CONSTRUCTOR------------------------------------
+    /**
+     * Constructor for the ship class
+     * @param startCoordinate
+     * @param endCoordnate
+     */
     public Ship(int[] startCoordinate, int[] endCoordnate) throws ShipNotAvailableExeption {
-        /**
-         * Constructor for the ship class
-         * @param startCoordinate
-         * @param endCoordnate
-         */
+
         this.length = Math.abs((startCoordinate[0]-endCoordnate[0])+(startCoordinate[1]-endCoordnate[1])+1);
 
-        if (shipAvailability(this.length)){
-            Board.checkMoveLegality(startCoordinate,endCoordnate);
-        }
+//        if (shipAvailability(this.length)){
+//            Board.checkMoveLegality(startCoordinate,endCoordnate);
+//        }
 
     }
 
