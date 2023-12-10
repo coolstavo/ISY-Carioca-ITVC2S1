@@ -4,11 +4,14 @@ import javax.swing.*;
 
 public abstract class BaseTemplate {
 
+    //
     JFrame frame;
     JPanel panel;
     String title;
 
     public BaseTemplate(String title) {
+
+        // Create a new JFrame and JPanel
         frame = new JFrame(title);
         panel = new JPanel();
         frame.add(panel);
