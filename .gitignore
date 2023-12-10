@@ -27,3 +27,9 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/Zeeslag/Zeeslag Server Alpha/
+/Zeeslag/Zeeslag Server Alpha/zeeslag-server-alpha.jar
+/Zeeslag/Zeeslag Server Alpha/readme.md
+/Zeeslag/Zeeslag Server Alpha/websocket_protocol.md
+/Zeeslag/Zeeslag Server Alpha/server.properties
+/Zeeslag/Zeeslag Server Alpha/zeeslag-server-protocol.txt
