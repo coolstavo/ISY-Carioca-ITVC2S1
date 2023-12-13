@@ -70,7 +70,7 @@ public class SplashScreen extends BaseTemplate {
         panel.setLayout(new BorderLayout());
 
         // Add image to the center of the panel
-        panel.add(new JLabel("", image, 0), BorderLayout.CENTER);
+        panel.add(new JLabel("", image, SwingConstants.CENTER), BorderLayout.CENTER);
 
         // Create and configure the status label
         statusLabel = new JLabel("Loading application...");

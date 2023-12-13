@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         SwingUtilities.invokeLater(() -> {
             // Create and display the splash screen

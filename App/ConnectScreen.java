@@ -106,8 +106,7 @@ public class ConnectScreen extends BaseTemplate {
      * Creates and returns the host text field with a default value of "localhost".
      */
     private JTextField createHostField() {
-        JTextField hostField = new JTextField("localhost", 15); // Default host
-        return hostField;
+        return new JTextField("localhost", 15);
     }
 
     /*
@@ -115,8 +114,7 @@ public class ConnectScreen extends BaseTemplate {
      * Creates and returns the port text field with a default value of "7789".
      */
     private JTextField createPortField() {
-        JTextField portField = new JTextField("7789", 5); // Default port
-        return portField;
+        return new JTextField("7789", 5);
     }
 
     /*
