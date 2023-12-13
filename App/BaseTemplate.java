@@ -1,13 +1,11 @@
 package App;
-
 import javax.swing.*;
 
-public abstract class BaseTemplate {
+public class BaseTemplate {
 
     //
     JFrame frame;
     JPanel panel;
-    String title;
 
     public BaseTemplate(String title) {
 
@@ -17,6 +15,13 @@ public abstract class BaseTemplate {
         frame.add(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 500);
-        frame.setVisible(true);
+    }
+
+    public void show() {
+        SwingUtilities.invokeLater(() -> frame.setVisible(true));
+    }
+
+    public void hide() {
+        SwingUtilities.invokeLater(() -> frame.setVisible(false));
     }
 }

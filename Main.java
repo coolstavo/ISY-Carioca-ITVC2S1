@@ -1,10 +1,20 @@
-import App.BaseTemplate;
-import App.ConnectScreen;
-import Game.Board;
+import App.SplashScreen;
+
+import javax.swing.*;
+import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
+        SwingUtilities.invokeLater(() -> {
+            // Create and display the splash screen
+            SplashScreen splashScreen = new SplashScreen("Carioca AI");
+            splashScreen.show();
+        });
+
+
+
 
 
     }
