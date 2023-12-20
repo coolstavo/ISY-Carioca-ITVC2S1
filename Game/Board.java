@@ -61,55 +61,34 @@ public class Board {
     public String toString() {
         StringBuilder result = new StringBuilder();
 
+        int rows = 0;
+        int collumns = 0;
+
+        result.append("  ");
+
+        for (int i = 0; i < this.nrOfColumns; i++) {
+            result.append(" ").append(collumns++).append(" ");
+        }
+        result.append('\n');
+
         // Iterate through the board elements
         for (List<String> row : this.board) {
             // Print the values in the current row
+
+            result.append(rows++).append(" ");
+
             for (String value : row) {
+
                 result.append("[").append(value).append("]");
             }
             result.append("\n");
+
         }
 
         return result.toString();
     }
 
     //-----------------------------METHODS----------------------------------
-
-    /**
-     * Checks if a contestant with the specified symbol has won the game.
-     *
-     * @param symbol the symbol to check for (e.g., 'X' or 'O')
-     * @return true if the contestant has won, false otherwise
-     */
-    public boolean hasContestantWon(char symbol) {
-        // Check rows
-        for (List<String> row : this.board) {
-            if (checkRow(row, symbol)) {
-                return true;
-            }
-        }
-
-        // Check columns
-        for (int i = 0; i < this.nrOfColumns; i++) {
-            List<String> column = new ArrayList<>();
-            for (List<String> row : this.board) {
-                column.add(row.get(i));
-            }
-            if (checkRow(column, symbol)) {
-                return true;
-            }
-        }
-
-        // Check diagonals
-        List<String> diagonal1 = new ArrayList<>();
-        List<String> diagonal2 = new ArrayList<>();
-        for (int i = 0; i < this.nrOfRows; i++) {
-            diagonal1.add(this.board.get(i).get(i));
-            diagonal2.add(this.board.get(i).get(this.nrOfColumns - 1 - i));
-        }
-
-        return checkRow(diagonal1, symbol) || checkRow(diagonal2, symbol);
-    }
 
     /**
      * Helper method to check if a row is a winning combination.
