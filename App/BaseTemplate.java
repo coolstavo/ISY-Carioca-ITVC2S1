@@ -3,7 +3,6 @@ package App;
 import javax.swing.*;
 
 public abstract class BaseTemplate {
-
     //
     JFrame frame;
     JPanel panel;

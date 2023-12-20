@@ -1,21 +1,30 @@
 package Zeeslag;
 
 import Game.Moveable;
+import Game.Board;
+import Game.IllegalMoveException;
 
 public class Moves implements Moveable {
 
-    @Override
-    public void Move(int[] startCoordinate, int[] endCoordinate) {
+    Board board;
+    public Moves(Board board){
+        this.board = board;
 
-        // TODO: implement this method
+    }
+
+    @Override
+    public void PlaceMove(int row, int column, String piece) {
+        board.getBoard().get(row).set(column, piece);
 
     }
 
     @Override
-    public void CheckMove(int[] startCoordinate, int[] endCoordinate) {
+    public boolean CheckMove(int row, int column) throws IllegalMoveException {
 
-        // TODO: implement this method
-
+        if (board.getBoard().get(row).get(column).equals(" ")){
+            return true;
+        } else {
+            throw new IllegalMoveException("Illegal move");
+        }
     }
-
 }

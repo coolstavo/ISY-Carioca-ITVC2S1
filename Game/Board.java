@@ -5,14 +5,15 @@ import java.util.List;
 
 public class Board {
 
-    private List<String> board = new ArrayList<String>();
+    private List<List<String>> board;
     private int nrOfRows;
     private int nrOfColumns;
 
     public Board(int nrOfRows, int nrOfColumns) {
         this.nrOfRows = nrOfRows;
         this.nrOfColumns = nrOfColumns;
-        createGrid(nrOfRows,nrOfColumns);
+        this.board = new ArrayList<>();
+        createGrid(nrOfRows, nrOfColumns);
     }
 
     //---------------------------GETTERS------------------------------------
@@ -25,35 +26,67 @@ public class Board {
         return nrOfRows;
     }
 
-    //----------------------------METHODS-----------------------------------
+    public List<List<String>> getBoard() {
+        return this.board;
+    }
+
+    //----------------------------BOARD-----------------------------------
 
     /**
-     * Creates a 2d grid in an array with the coordinates in it
+     * Creates a grid with the specified number of rows and columns
+     *
+     * @param rows
+     * @param columns
+     * @return
      */
     public void createGrid(int rows, int columns) {
 
         // Iterate through rows
         for (int i = 0; i < rows; i++) {
+            List<String> row = new ArrayList<>();
 
-            // Iterate through columns
+            // Add an empty string to each cell in the current row
             for (int j = 0; j < columns; j++) {
-
-                // Print the grid element (you can modify this to create your grid structure)
-                String gridentry = "[" + i + "," + j + "]";
-                this.board.add(gridentry);
-
+                row.add(" ");
             }
-            this.board.add("\n");
+
+            // Add the current row to the board
+            this.board.add(row);
         }
     }
-
 
     //-----------------------------OVERRIDES--------------------------------
 
     @Override
     public String toString() {
-        return board.toString();
-    }
+        StringBuilder result = new StringBuilder();
 
+        int rows = 0;
+        int collumns = 0;
+
+        result.append("  ");
+
+        for (int i = 0; i < this.nrOfColumns; i++) {
+
+            result.append(" ").append(collumns++).append(" ");
+        }
+        result.append('\n');
+
+        // Iterate through the board elements
+        for (List<String> row : this.board) {
+            // Print the values in the current row
+
+            result.append(rows++).append(" ");
+
+            for (String value : row) {
+
+                result.append("[").append(value).append("]");
+            }
+            result.append("\n");
+
+        }
+
+        return result.toString();
+    }
 
 }
