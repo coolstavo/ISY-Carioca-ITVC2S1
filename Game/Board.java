@@ -67,6 +67,7 @@ public class Board {
         result.append("  ");
 
         for (int i = 0; i < this.nrOfColumns; i++) {
+
             result.append(" ").append(collumns++).append(" ");
         }
         result.append('\n');
@@ -87,24 +88,5 @@ public class Board {
 
         return result.toString();
     }
-
-    //-----------------------------METHODS----------------------------------
-
-    /**
-     * Helper method to check if a row is a winning combination.
-     *
-     * @param row    the row to check
-     * @param symbol the symbol to check for
-     * @return true if the row is a winning combination, false otherwise
-     */
-    private boolean checkRow(List<String> row, char symbol) {
-        for (String cell : row) {
-            if (!cell.equals(String.valueOf(symbol))) {
-                return false; // If any cell does not match the symbol, return false
-            }
-        }
-        return true; // All cells matched the symbol
-    }
-
 
 }
