@@ -1,75 +1,74 @@
+
 package Zeeslag;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import Game.Board;
 
+/**
+ * Ship class
+ */
 public class Ship {
 
-    private String[] typeDefiner= new String[]{"Patrouileschip", "Onderzeeër", "Slagschip", "Vliegdekschip"};
-    private int length;
+    private static final List<String> SHIP_TYPES = Arrays.asList("Patrouilleschip", "Onderzeeër", "Slagschip", "Vliegdekschip");
 
-    private int[] startCoordinate;
-    private int[] endCoordnate;
-
-    private List<String> availableShips = new ArrayList<>(List.of(typeDefiner));
-    private String orientation;
     private String type;
+    private int length;
+    private String representation;  // Representation of the ship (first letter of the type)
 
-    private Board Board;
 
     //---------------------------CONSTRUCTOR------------------------------------
+
     /**
      * Constructor for the ship class
-     * @param startCoordinate
-     * @param endCoordnate
+     * @param type
+     * @throws ShipNotAvailableException
      */
-    public Ship(int[] startCoordinate, int[] endCoordnate) throws ShipNotAvailableExeption {
-
-        this.length = Math.abs((startCoordinate[0]-endCoordnate[0])+(startCoordinate[1]-endCoordnate[1])+1);
-
-//        if (shipAvailability(this.length)){
-//            Board.checkMoveLegality(startCoordinate,endCoordnate);
-//        }
-
-    }
-
-    //----------------------------METHODS-----------------------------------
-
-    public boolean shipAvailability(int shiplen){
-        /**
-         * returns true if ship is available, false if ship is not available
-         * @param shiplen
-         */
-        switch (shiplen) {
-            case 2:
-                if (availableShips.contains(typeDefiner[0])) {
-                    this.type = typeDefiner[0];
-                    availableShips.remove(type);
-                    return true;
-                } else return false;
-            case 3:
-                if (availableShips.contains(typeDefiner[1])) {
-                    this.type = typeDefiner[1];
-                    availableShips.remove(type);
-                    return true;
-                } else return false;
-            case 4:
-                if (availableShips.contains(typeDefiner[2])) {
-                    this.type = typeDefiner[2];
-                    availableShips.remove(type);
-                    return true;
-                } else return false;
-            case 6:
-                if (availableShips.contains(typeDefiner[3])) {
-                    this.type = typeDefiner[3];
-                    availableShips.remove(type);
-                    return true;
-                } else return false;
-            default:
-                return false;
+    public Ship(String type) throws ShipNotAvailableException {
+        if (SHIP_TYPES.contains(type)) {
+            this.type = type;
+            this.length = calculateLength(type);
+            this.representation = String.valueOf(type.charAt(0));  // Get the first letter of the type
+        } else {
+            throw new ShipNotAvailableException("Invalid ship type: " + type);
         }
     }
 
 
+    //---------------------------GETTERS------------------------------------
+
+    public String getType() {
+        return type;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public String getRepresentation() {
+        return representation;
+    }
+
+    //---------------------------METHODS------------------------------------
+
+
+    /**
+     * Calculate the length of the ship based on the type
+     * @param type
+     * @return
+     */
+    private int calculateLength(String type) {
+        // You can define the lengths for each ship type as needed
+        switch (type) {
+            case "Patrouilleschip":
+                return 2;
+            case "Onderzeeër":
+                return 3;
+            case "Slagschip":
+                return 4;
+            case "Vliegdekschip":
+                return 6;
+            default:
+                return 0; // or throw an exception for unknown ship types
+        }
+    }
 }
