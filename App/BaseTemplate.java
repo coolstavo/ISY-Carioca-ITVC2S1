@@ -24,4 +24,9 @@ public class BaseTemplate {
     public void hide() {
         SwingUtilities.invokeLater(() -> frame.setVisible(false));
     }
+
+    public void close() {
+        frame.dispose();}
+
 }
+
