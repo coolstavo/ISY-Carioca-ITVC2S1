@@ -1,9 +1,11 @@
 package Game;
 
+import Zeeslag.Ship;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board {
+public abstract class Board {
 
     private List<List<String>> board;
     private int nrOfRows;
@@ -57,7 +59,6 @@ public class Board {
 
     //-----------------------------OVERRIDES--------------------------------
 
-
     @Override
     public String toString() {
             StringBuilder result = new StringBuilder();
@@ -89,5 +90,4 @@ public class Board {
 
             return result.toString();
         }
-
     }

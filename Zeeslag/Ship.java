@@ -33,7 +33,6 @@ public class Ship {
         }
     }
 
-
     //---------------------------GETTERS------------------------------------
 
     public String getType() {
@@ -48,8 +47,8 @@ public class Ship {
         return representation;
     }
 
-    //---------------------------METHODS------------------------------------
 
+    //---------------------------METHODS------------------------------------
 
     /**
      * Calculate the length of the ship based on the type
@@ -70,5 +69,12 @@ public class Ship {
             default:
                 return 0; // or throw an exception for unknown ship types
         }
+    }
+
+    //-------------------------------OVERRIDES--------------------------------
+
+    @Override
+    public String toString() {
+        return this.type + " (" + this.representation + ")";
     }
 }
