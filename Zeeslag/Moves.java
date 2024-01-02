@@ -6,25 +6,45 @@ import Game.IllegalMoveException;
 
 public class Moves implements Moveable {
 
-    Board board;
-    public Moves(Board board){
+    private Board board;
+
+    public Moves(Board board) {
         this.board = board;
-
     }
 
     @Override
-    public void PlaceMove(int row, int column, String piece) {
-        board.getBoard().get(row).set(column, piece);
-
+    public void placeMove(int row, int column, String piece) {
+        board.getBoard().get(row).set(column, piece);  // Set the specified piece on the board
     }
 
     @Override
-    public boolean CheckMove(int row, int column) throws IllegalMoveException {
-
-        if (board.getBoard().get(row).get(column).equals(" ")){
+    public boolean checkMove(int row, int column) throws IllegalMoveException {
+        if (board.getBoard().get(row).get(column).equals(" ")) {
             return true;
         } else {
-            throw new IllegalMoveException("Illegal move");
+            throw new IllegalMoveException("Illegal move: Cell is already occupied");
+        }
+    }
+
+    public void placeShip(Ship ship, int startRow, int startColumn, boolean isHorizontal) throws IllegalMoveException {
+        int shipLength = ship.getLength();
+
+        if (isHorizontal) {
+            for (int i = startColumn; i < startColumn + shipLength; i++) {
+                checkMove(startRow, i);
+            }
+
+            for (int i = startColumn; i < startColumn + shipLength; i++) {
+                placeMove(startRow, i, ship.getRepresentation());  // Set ship type on the board
+            }
+        } else {
+            for (int i = startRow; i < startRow + shipLength; i++) {
+                checkMove(i, startColumn);
+            }
+
+            for (int i = startRow; i < startRow + shipLength; i++) {
+                placeMove(i, startColumn, ship.getRepresentation()); // Set ship type on the board
+            }
         }
     }
 }
