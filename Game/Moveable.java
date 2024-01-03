@@ -2,8 +2,8 @@ package Game;
 
 public interface Moveable {
 
-    public void Move(int[] startCoordinate, int[] endCoordinate);
+    public void placeMove(int row, int column, String piece);
 
-    public void CheckMove(int[] startCoordinate, int[] endCoordinate);
+    public boolean checkMove(int row, int column) throws IllegalMoveException;
 
 }

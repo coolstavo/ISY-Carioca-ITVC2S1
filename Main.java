@@ -1,42 +1,65 @@
-import App.ConnectScreen;
-import App.SelectScreen;
-import App.SplashScreen;
-
-import javax.swing.*;
-import java.io.IOException;
+import Game.Board;
+import Game.IllegalMoveException;
+import Zeeslag.*;
 
 public class Main {
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            // 1. Create and display the splash screen
-            SplashScreen splashScreen = new SplashScreen("Splash Screen");
-            splashScreen.show();
+    public static void main(String[] args) throws ShipNotAvailableException, IllegalMoveException {
+        // Create ZeeslagBoards for Player 1 and Player 2
+        ZeeslagBoard board1 = new ZeeslagBoard(10,10);
+        ZeeslagBoard board2 = new ZeeslagBoard(10,10);
 
-            // 2. Set a timer to close the splash screen after 3 seconds and open the ConnectScreen
-            Timer splashTimer = new Timer(3000, e -> {
-                splashScreen.close();
+        // Create PlayerZeeslag instances for Player 1 and Player 2
+        PlayerZeeslag player1 = new PlayerZeeslag("Player Joe");
+        PlayerZeeslag player2 = new PlayerZeeslag("Player Dozo");
 
-                // 3. Create and display the ConnectScreen
-                ConnectScreen connectScreen = new ConnectScreen("Server Connection");
-                connectScreen.show();
+        // Set ZeeslagBoards for each player
+        player1.setZeeslagBoard(board1);
+        player2.setZeeslagBoard(board2);
 
-                // 4. Set a timer to close the ConnectScreen after a certain time and open the SelectScreen
-                Timer connectTimer = new Timer(3000, e2 -> {
-                    connectScreen.close();
+        // Create Moves instance with the ZeeslagBoards for both players
+        Moves moves = new Moves(board1, board2);
 
-                    // 5. Create and display the SelectScreen
-                    SelectScreen selectScreen = new SelectScreen();
-                    selectScreen.show();
-                });
 
-                connectTimer.setRepeats(false); // Execute only once
-                connectTimer.start();
-            });
+        //  Switch players and place a ship for each player
 
-            splashTimer.setRepeats(false); // Execute only once
-            splashTimer.start();
-        });
+        // player 1 begint
+        moves.switchPlayer();
+        try {
+            moves.placeShip(new Ship("Patrouilleschip"), 0, 0, true);
+        } catch (IllegalMoveException e) {
+            e.printStackTrace();
+        }
+
+        moves.switchPlayer();
+        try {
+            moves.placeShip(new Ship("Onderzeeër"), 2, 3, false);
+        } catch (IllegalMoveException e) {
+            e.printStackTrace();
+        }
+
+        moves.switchPlayer();
+        try{moves.placeShip(new Ship("Slagschip"),3,5,true);}
+        catch (IllegalMoveException e){
+            e.printStackTrace();
+        }
+
+        moves.switchPlayer();
+        try{moves.placeShip(new Ship("Vliegdekschip"),1,2,false);}
+        catch (IllegalMoveException e){
+            e.printStackTrace();
+        }
+
+        // test for IllegalMoveException
+        moves.switchPlayer();
+        try{moves.placeShip(new Ship("Slagschip"),0,0,true);}
+        catch (IllegalMoveException e){
+            e.printStackTrace();
+        }
+
+
+        // Print the status of the boards
+        System.out.println("Player 1's Board:\n" + board1);
+        System.out.println("Player 2's Board:\n" + board2);
     }
-
 }
