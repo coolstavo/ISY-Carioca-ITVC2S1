@@ -6,11 +6,20 @@ import Game.IllegalMoveException;
 
 public class Moves implements Moveable {
 
-    private Board board;
+
+    public final static String HIT = "X";
+    public final static String MISS = "O";
+
+
+    private ZeeslagBoard board;
+
+    //--------------------------------CONSTRUCTOR--------------------------------
 
     public Moves(Board board) {
-        this.board = board;
+        this.board = (ZeeslagBoard) board;
     }
+
+    //-------------------------------OVERRIDES--------------------------------
 
     @Override
     public void placeMove(int row, int column, String piece) {
@@ -19,32 +28,62 @@ public class Moves implements Moveable {
 
     @Override
     public boolean checkMove(int row, int column) throws IllegalMoveException {
+
+        // Check if the move is within the board
         if (board.getBoard().get(row).get(column).equals(" ")) {
             return true;
         } else {
-            throw new IllegalMoveException("Illegal move: Cell is already occupied");
+            throw new IllegalMoveException("Illegal move: Cell is already occupied" + "(" + row + "," + column + ")");
         }
     }
+
+
+    //-------------------------------METHODS--------------------------------
 
     public void placeShip(Ship ship, int startRow, int startColumn, boolean isHorizontal) throws IllegalMoveException {
         int shipLength = ship.getLength();
 
+        // Check if the ship has already been placed on the board, if so, throw an exception
+        if (board.isShipAlreadyPlaced(ship)) {
+            throw new IllegalMoveException("Ship type already placed " + "(" + ship.getType() + ")" + " You can only place one of each ship type.");
+        }
+
         if (isHorizontal) {
-            for (int i = startColumn; i < startColumn + shipLength; i++) {
-                checkMove(startRow, i);
-            }
 
+            // Check if the ship can be placed on the board (horizontal)
             for (int i = startColumn; i < startColumn + shipLength; i++) {
-                placeMove(startRow, i, ship.getRepresentation());  // Set ship type on the board
+
+                if (startColumn + ship.getLength() > board.getNrOfColumns()) {
+                    throw new IllegalMoveException("Invalid ship placement " +"("+ ship.getType() + ")");
+
+                } else if (!checkMove(startRow, i)) {
+                    throw new IllegalMoveException("Invalid ship placement " +"("+ ship.getType() + ")");
+
+                } else {
+                    placeMove(startRow, i, ship.getRepresentation());  // Set ship type on the board
+                }
             }
+            board.placeShip(ship);  // Add ship to the list of placed ships
+
+
         } else {
-            for (int i = startRow; i < startRow + shipLength; i++) {
-                checkMove(i, startColumn);
-            }
 
+            // Check if the ship can be placed on the board (vertical)
             for (int i = startRow; i < startRow + shipLength; i++) {
-                placeMove(i, startColumn, ship.getRepresentation()); // Set ship type on the board
+
+                if (startRow + ship.getLength() > board.getNrOfRows()){
+                    throw new IllegalMoveException("Invalid ship placement " +"("+ ship.getType() + ")");
+
+                } else if (!checkMove(i, startColumn) && startRow + ship.getLength() > 8) {
+                    throw new IllegalMoveException("Invalid ship placement " +"("+ ship.getType() + ")");
+
+                } else {
+                    placeMove(i, startColumn, ship.getRepresentation()); // Set ship type on the board
+                }
             }
+            board.placeShip(ship);  // Add ship to the list of placed ships
         }
     }
+
+
 }
