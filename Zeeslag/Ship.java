@@ -11,6 +11,11 @@ public class Ship {
 
     private static final List<String> SHIP_TYPES = Arrays.asList("Patrouilleschip", "Onderzeeër", "Slagschip", "Vliegdekschip");
 
+    public static final String PATROUILLESCHIP = "Patrouilleschip";
+    public static final String ONDERZEEER = "Onderzeeër";
+    public static final String SLAGSCHIP = "Slagschip";
+    public static final String VLIEGDEKSCHIP = "Vliegdekschip";
+
     private String type;
     private int length;
     private String representation;  // Representation of the ship (first letter of the type)
