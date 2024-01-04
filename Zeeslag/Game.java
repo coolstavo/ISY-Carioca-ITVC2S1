@@ -78,6 +78,7 @@ public class Game {
         }
     }
 
+
     public void placeShips(ZeeslagBoard board, Moves moves) throws ShipNotAvailableException, IllegalMoveException {
 
         for (Ship ship : shipsToPlace) {
@@ -93,55 +94,37 @@ public class Game {
                     System.out.println(board);
                     System.out.println();
 
-                    System.out.println("1 Horizontaal: ");
-                    System.out.println("2 Verticaal: ");
+                    int direction;
+                    do {
+                        System.out.println("1 Horizontaal: ");
+                        System.out.println("2 Verticaal: ");
+                        direction = scanner.nextInt();
+                        if (direction != 1 && direction != 2) {
+                            System.out.println("Ongeldige richting, kies 1 voor horizontaal of 2 voor verticaal.");
+                        }
+                    } while (direction != 1 && direction != 2);
 
-                    int direction = scanner.nextInt();
+                    //row
+                    System.out.println("Kies een rij: ");
+                    int row = scanner.nextInt();
 
-                    if (direction == 1) {
+                    //column
+                    if (row >= 0 && row < 8) {
+                        System.out.println("Kies een kolom: ");
+                        int column = scanner.nextInt();
 
-                        //row
-                        System.out.println("Kies een rij: ");
-                        int row = scanner.nextInt();
-
-                        //column
-                        if (row >= 0 && row < 8) {
-                            System.out.println("Kies een kolom: ");
-                            int column = scanner.nextInt();
-
-                            //place ship
-                            if (column >= 0 && column < 8) {
-                                moves.placeShip(ship, row, column, true);
-
-                            } else {
-                                System.out.println("Deze kolom bestaat niet");
-                            }
-
-
+                        //place ship
+                        if (column >= 0 && column < 8) {
+                            moves.placeShip(ship, row, column, direction == 1);
                         } else {
-                            System.out.println("Deze rij bestaat niet");
+                            System.out.println("Deze kolom bestaat niet");
                         }
 
-                    //Direction == vertical
-                    } else if (direction == 2) {
-                        System.out.println("Kies een rij: ");
-                        int row = scanner.nextInt();
-                        if (row >= 0 && row < 8) {
-                            System.out.println("Kies een kolom: ");
-                            int column = scanner.nextInt();
-                            if (column >= 0 && column < 8) {
-                                moves.placeShip(ship, row, column, false);
-                            } else {
-                                System.out.println("Deze kolom bestaat niet");
-                            }
-                        } else {
-                            System.out.println("Deze rij bestaat niet");
-                        }
                     } else {
-                        System.out.println("Ongeldige richting, kies 1 voor horizontaal of 2 voor verticaal.");
+                        System.out.println("Deze rij bestaat niet");
                     }
 
-                    //Ship is placed
+                    // Ship is placed
                     shipPlaced = true;
                     System.out.println(board);
                     System.out.println("-----------------------------------------");
