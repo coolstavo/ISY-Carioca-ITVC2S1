@@ -40,10 +40,9 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    System.out.print("Enter coordinates for hitting (e.g., A3): ");
-                    String hitCoordinates = scanner.next().toUpperCase();
-                    int hitRow = hitCoordinates.charAt(0) - 'A';
-                    int hitColumn = Integer.parseInt(hitCoordinates.substring(1)) - 1;
+                    System.out.print("Enter coordinates for hitting (e.g., 3 5): ");
+                    int hitRow = scanner.nextInt();
+                    int hitColumn = scanner.nextInt();
 
                     moves.placeHit(hitRow, hitColumn);
                     System.out.println("Player 1's Board:\n" + board1);
