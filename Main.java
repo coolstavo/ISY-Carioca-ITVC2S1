@@ -1,65 +1,77 @@
-import Game.Board;
 import Game.IllegalMoveException;
 import Zeeslag.*;
+
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) throws ShipNotAvailableException, IllegalMoveException {
-        // Create ZeeslagBoards for Player 1 and Player 2
-        ZeeslagBoard board1 = new ZeeslagBoard(10,10);
-        ZeeslagBoard board2 = new ZeeslagBoard(10,10);
-
-        // Create PlayerZeeslag instances for Player 1 and Player 2
-        PlayerZeeslag player1 = new PlayerZeeslag("Player Joe");
-        PlayerZeeslag player2 = new PlayerZeeslag("Player Dozo");
-
-        // Set ZeeslagBoards for each player
-        player1.setZeeslagBoard(board1);
-        player2.setZeeslagBoard(board2);
-
-        // Create Moves instance with the ZeeslagBoards for both players
-        Moves moves = new Moves(board1, board2);
+        Scanner scanner = new Scanner(System.in);
 
 
-        //  Switch players and place a ship for each player
+        ZeeslagBoard board1 = new ZeeslagBoard(10, 10);
 
-        // player 1 begint
-        moves.switchPlayer();
+        Moves moves = new Moves(board1);
+
+
+
         try {
             moves.placeShip(new Ship("Patrouilleschip"), 0, 0, true);
         } catch (IllegalMoveException e) {
             e.printStackTrace();
         }
 
-        moves.switchPlayer();
         try {
             moves.placeShip(new Ship("Onderzeeër"), 2, 3, false);
         } catch (IllegalMoveException e) {
             e.printStackTrace();
         }
 
-        moves.switchPlayer();
-        try{moves.placeShip(new Ship("Slagschip"),3,5,true);}
-        catch (IllegalMoveException e){
-            e.printStackTrace();
-        }
-
-        moves.switchPlayer();
-        try{moves.placeShip(new Ship("Vliegdekschip"),1,2,false);}
-        catch (IllegalMoveException e){
-            e.printStackTrace();
-        }
-
-        // test for IllegalMoveException
-        moves.switchPlayer();
-        try{moves.placeShip(new Ship("Slagschip"),0,0,true);}
-        catch (IllegalMoveException e){
-            e.printStackTrace();
-        }
-
-
-        // Print the status of the boards
         System.out.println("Player 1's Board:\n" + board1);
-        System.out.println("Player 2's Board:\n" + board2);
+
+
+        while (true) {
+            System.out.println("\nChoose an action:");
+            System.out.println("1. Place a hit");
+            System.out.println("2. Place a ship");
+            System.out.println("3. Exit the game");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter coordinates for hitting (e.g., A3): ");
+                    String hitCoordinates = scanner.next().toUpperCase();
+                    int hitRow = hitCoordinates.charAt(0) - 'A';
+                    int hitColumn = Integer.parseInt(hitCoordinates.substring(1)) - 1;
+
+                    moves.placeHit(hitRow, hitColumn);
+                    System.out.println("Player 1's Board:\n" + board1);
+                    break;
+                case 2:
+                    System.out.println("Enter ship details for placing:");
+
+                    System.out.print("Ship type (Patrouilleschip, Onderzeeër, Slagschip, Vliegdekschip): ");
+                    String shipType = scanner.next();
+
+                    System.out.print("Starting row (0-9): ");
+                    int shipRow = scanner.nextInt();
+
+                    System.out.print("Starting column (0-9): ");
+                    int shipColumn = scanner.nextInt();
+
+                    System.out.print("Horizontal (true/false): ");
+                    boolean isHorizontal = scanner.nextBoolean();
+
+                    moves.placeShip(new Ship(shipType), shipRow, shipColumn, isHorizontal);
+                    System.out.println("Player 1's Board:\n" + board1);
+                    break;
+                case 3:
+                    System.out.println("Exiting the game.");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
     }
 }
