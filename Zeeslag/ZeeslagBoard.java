@@ -22,7 +22,6 @@ public class ZeeslagBoard extends Board {
         return placedShips;
     }
 
-
     //-------------------------------METHODS--------------------------------
 
     public boolean isShipAlreadyPlaced(Ship ship) {
