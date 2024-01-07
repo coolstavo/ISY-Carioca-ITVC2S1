@@ -18,4 +18,14 @@ public abstract class BaseTemplate {
         frame.setSize(800, 500);
         frame.setVisible(true);
     }
+
+    public void show() {
+        // Make the frame visible when the show() method is called
+        frame.setVisible(true);
+    }
+
+    public void hide() {
+        // Hide the frame
+        frame.setVisible(false);
+    }
 }
