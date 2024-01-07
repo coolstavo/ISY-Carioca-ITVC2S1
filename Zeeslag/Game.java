@@ -15,7 +15,7 @@ public class Game {
 
     // Create boards and moves for player 2
     ZeeslagBoard ShipPlacementBoardP2;
-    ZeeslagBoard PlayBoardP2;;
+    ZeeslagBoard PlayBoardP2;
     Moves PlaceMovesP2;
     Moves PlayMovesP2;
 
@@ -93,10 +93,10 @@ public class Game {
 
                 System.out.println("------------------------------------------------");
 
-                System.out.println( player1.getName() + "'s board: ");
+                System.out.println(player1.getName() + "'s board: ");
                 System.out.println(ShipPlacementBoardP1);
 
-                System.out.println( player2.getName() + "'s board: ");
+                System.out.println(player2.getName() + "'s board: ");
                 System.out.println(ShipPlacementBoardP2);
 
                 System.out.println("------------------------------------------------");
@@ -172,3 +172,4 @@ public class Game {
             }
         }
     }
+}
