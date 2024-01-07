@@ -2,7 +2,6 @@ package Zeeslag;
 
 import Game.Player;
 import Game.IllegalMoveException;
-
 import java.util.Scanner;
 
 

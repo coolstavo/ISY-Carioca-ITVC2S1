@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import Server.Challengeable;
 
-
 public abstract class Player {
     private String name;
 
@@ -16,6 +15,5 @@ public abstract class Player {
         return name;
     }
 
-
-
+  
 }

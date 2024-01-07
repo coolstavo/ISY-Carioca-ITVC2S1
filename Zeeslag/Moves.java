@@ -86,4 +86,25 @@ public class Moves implements Moveable {
             board.placeShip(ship);  // Add ship to the list of placed ships
         }
     }
+
+    public Ship placeHit(int row, int column) throws IllegalMoveException {
+
+        // Check if the move is within the board
+        if (row < 0 || row >= board.getNrOfRows() || column < 0 || column >= board.getNrOfColumns()) {
+            throw new IllegalMoveException("Illegal move: Coordinates are outside the board" + "(" + row + "," + column + ")");
+        }
+
+        // Check if the move is a hit or miss
+        Ship hitShip = board.getShipAt(row, column);
+
+        if (hitShip != null) {
+            placeMove(row, column, HIT);  // Place a hit on the board
+            System.out.println("Hit!");
+            return hitShip;
+        } else {
+            placeMove(row, column, MISS);  // Place a miss on the board
+            System.out.println("Miss!");
+            return null;
+        }
+    }
 }
