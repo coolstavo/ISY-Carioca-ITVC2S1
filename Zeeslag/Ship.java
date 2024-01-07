@@ -92,18 +92,19 @@ public class Ship {
                 return 0; // or throw an exception for unknown ship types
         }
     }
+  
+      // Additional methods to set startRow, startColumn, and orientation
+    public void setStartLocation(int startRow, int startColumn, boolean isHorizontal) {
+        this.startRow = startRow;
+        this.startColumn = startColumn;
+        this.isHorizontal = isHorizontal;
+    }
+}
 
     //-------------------------------OVERRIDES--------------------------------
 
     @Override
     public String toString() {
         return this.type + " (" + this.representation + ")";
-    }
-
-    // Additional methods to set startRow, startColumn, and orientation
-    public void setStartLocation(int startRow, int startColumn, boolean isHorizontal) {
-        this.startRow = startRow;
-        this.startColumn = startColumn;
-        this.isHorizontal = isHorizontal;
     }
 }

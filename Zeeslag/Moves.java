@@ -33,8 +33,10 @@ public class Moves implements Moveable {
         if (board.getBoard().get(row).get(column).equals(" ")) {
             return true;
         } else {
-            throw new IllegalMoveException("Illegal move: Cell is already occupied" + "(" + row + "," + column + ")");
+            System.out.println("Illegal move: Cell is already occupied" + "(" + row + "," + column + ")");
+            return false;
         }
+
     }
 
 

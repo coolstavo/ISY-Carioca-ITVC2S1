@@ -22,7 +22,6 @@ public class ZeeslagBoard extends Board {
         return placedShips;
     }
 
-
     //-------------------------------METHODS--------------------------------
 
     public boolean isShipAlreadyPlaced(Ship ship) {
@@ -33,7 +32,10 @@ public class ZeeslagBoard extends Board {
         placedShips.add(ship);
     }
 
-
+  
+  //
+  
+  
     public boolean isShipAlreadyPlaced(int row, int column) {
         for (Ship ship : placedShips) {
             if (row == ship.getStartRow() && column == ship.getStartColumn()) {
@@ -57,9 +59,5 @@ public class ZeeslagBoard extends Board {
         }
         return null;
     }
-
-
-
-
 
 }
