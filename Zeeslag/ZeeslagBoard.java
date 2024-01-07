@@ -32,6 +32,12 @@ public class ZeeslagBoard extends Board {
         placedShips.add(ship);
     }
 
+
+
+    //
+
+
+}
   
   //
   
@@ -61,3 +67,4 @@ public class ZeeslagBoard extends Board {
     }
 
 }
+
