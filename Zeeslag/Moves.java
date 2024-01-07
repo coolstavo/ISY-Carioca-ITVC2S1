@@ -88,15 +88,22 @@ public class Moves implements Moveable {
     }
 
     public void placeHit(int row, int column) throws IllegalMoveException {
-        // Check if the cell is occupied by a ship
+    // Check if the cell is occupied by a ship
         if (!board.getBoard().get(row).get(column).equals(" ")) {
             // Place a hit on the board if the cell is occupied by a ship
-            placeMove(row, column, "X");
-            System.out.println("its a Hit!");
+            placeMove(row, column, HIT);
+            System.out.println("It's a Hit!");
+
+            // Check if the ship is sunk
+            for (Ship ship : board.getPlacedShips()) {
+                if (board.isShipSunk(ship)) {
+                    System.out.println("Ship " + ship.getType() + " has been sunk!");
+                }
+            }
         } else {
-            // Place a miss on the board if the cell is empty
-            placeMove(row, column, "O");
-            System.out.println("Its a Miss!");
+            // Place a miss on the board
+            placeMove(row, column, MISS);
+            System.out.println("It's a Miss!");
         }
     }
 

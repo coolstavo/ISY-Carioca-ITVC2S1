@@ -8,12 +8,14 @@ import Game.IllegalMoveException;
 public class Game {
 
     // Create boards and moves for player 1
+    ZeeslagPlayer player1;
     ZeeslagBoard ShipPlacementBoardP1;
     ZeeslagBoard PlayBoardP1;
     Moves PlaceMovesP1;
     Moves PlayMovesP1;
 
     // Create boards and moves for player 2
+    ZeeslagPlayer player2;
     ZeeslagBoard ShipPlacementBoardP2;
     ZeeslagBoard PlayBoardP2;
     Moves PlaceMovesP2;
@@ -71,11 +73,11 @@ public class Game {
             System.out.println("Player 1, what is your name?: ");
             Scanner scanner = new Scanner(System.in);
             String nameP1 = scanner.nextLine();
-            ZeeslagPlayer player1 = new ZeeslagPlayer(nameP1, PlayMovesP1, PlaceMovesP1, ShipPlacementBoardP1, PlayBoardP1);
+            player1 = new ZeeslagPlayer(nameP1, PlayMovesP1, PlaceMovesP1, ShipPlacementBoardP1, PlayBoardP1);
 
             System.out.println("Player 2, what is your name?: ");
             String nameP2 = scanner.nextLine();
-            ZeeslagPlayer player2 = new ZeeslagPlayer(nameP2, PlayMovesP2, PlaceMovesP2, ShipPlacementBoardP2, PlayBoardP2);
+            player2 = new ZeeslagPlayer(nameP2, PlayMovesP2, PlaceMovesP2, ShipPlacementBoardP2, PlayBoardP2);
 
             System.out.println("Welcome " + player1.getName() + " and " + player2.getName());
             System.out.println("------------------------------------------------");
@@ -108,15 +110,26 @@ public class Game {
             //Play
             System.out.println(player1.getName() + " make your move!");
             player1.makeMove();
+            checkWinner(player1, PlayBoardP1);
 
             System.out.println(player2.getName() + " make your move!");
             player2.makeMove();
-
+            checkWinner(player2, PlayBoardP2);
 
             isFinished = true;
         }
     }
 
+    public void checkWinner(ZeeslagPlayer player, ZeeslagBoard playBoard) {
+        if (playBoard.getDestroyedShips().size() == 4) {
+            declareWinner(player);
+            isFinished = true;
+        }
+    }
+
+    public void declareWinner(ZeeslagPlayer player) {
+        System.out.println("Gefeliciteerd, Player " + player.getName() + " wins!");
+    }
 
     public void placeShips(ZeeslagBoard board, Moves moves) throws ShipNotAvailableException, IllegalMoveException {
         for (Ship ship : shipsToPlace) {
