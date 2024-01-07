@@ -1,3 +1,4 @@
+
 package Zeeslag;
 
 import java.util.Arrays;
@@ -18,11 +19,6 @@ public class Ship {
     private String type;
     private int length;
     private String representation;  // Representation of the ship (first letter of the type)
-
-    //
-    private int startRow;  // Added property to store the start row
-    private int startColumn;  // Added property to store the start column
-    private boolean isHorizontal;  // Added property to store the orientation
 
     //---------------------------CONSTRUCTOR------------------------------------
 
@@ -56,20 +52,6 @@ public class Ship {
     }
 
 
-    //
-
-    public int getStartRow() {
-        return startRow;
-    }
-
-    public int getStartColumn() {
-        return startColumn;
-    }
-
-    public boolean isHorizontal() {
-        return isHorizontal;
-    }
-
     //---------------------------METHODS------------------------------------
 
     /**
@@ -92,14 +74,7 @@ public class Ship {
                 return 0; // or throw an exception for unknown ship types
         }
     }
-  
-      // Additional methods to set startRow, startColumn, and orientation
-    public void setStartLocation(int startRow, int startColumn, boolean isHorizontal) {
-        this.startRow = startRow;
-        this.startColumn = startColumn;
-        this.isHorizontal = isHorizontal;
-    }
-}
+
 
     //-------------------------------OVERRIDES--------------------------------
 
