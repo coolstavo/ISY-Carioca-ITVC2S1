@@ -34,6 +34,7 @@ public class Game {
     // Create boolean to check if the game is finished and if the ships are placed
     boolean isFinished = false;
     boolean shipsPlaced = false;
+    boolean playingGame = false;
 
     public Game() throws ShipNotAvailableException {
 
@@ -83,47 +84,73 @@ public class Game {
             System.out.println("------------------------------------------------");
 
             //Ship placement
-            if (!shipsPlaced) {
-                System.out.println(player1.getName() + " place your ships!");
-                placeShips(ShipPlacementBoardP1, PlaceMovesP1);
+            // if (!shipsPlaced) {
+            //     System.out.println(player1.getName() + " place your ships!");
+            //     placeShips(ShipPlacementBoardP1, PlaceMovesP1);
 
-                System.out.println("------------------------------------------------");
+            //     System.out.println("------------------------------------------------");
 
-                System.out.println(player2.getName() + " place your ships!");
-                placeShips(ShipPlacementBoardP2, PlaceMovesP2);
-                shipsPlaced = true;
+            //     System.out.println(player2.getName() + " place your ships!");
+            //     placeShips(ShipPlacementBoardP2, PlaceMovesP2);
+            //     shipsPlaced = true;
 
-                System.out.println("------------------------------------------------");
+            //     System.out.println("------------------------------------------------");
 
-                System.out.println(player1.getName() + "'s board: ");
-                System.out.println(ShipPlacementBoardP1);
+            //     System.out.println(player1.getName() + "'s board: ");
+            //     System.out.println(ShipPlacementBoardP1);
 
-                System.out.println(player2.getName() + "'s board: ");
-                System.out.println(ShipPlacementBoardP2);
+            //     System.out.println(player2.getName() + "'s board: ");
+            //     System.out.println(ShipPlacementBoardP2);
 
-                System.out.println("------------------------------------------------");
-            }
+            //     System.out.println("------------------------------------------------");
+            // }
+
+            PlaceMovesP1.placeShip(P,0,0, true);
+            PlaceMovesP1.placeShip(O,2,0, true);
+            PlaceMovesP1.placeShip(S,4,0, true);
+            PlaceMovesP1.placeShip(V,6,0, true);
+
+            System.out.println(ShipPlacementBoardP1);
+
+            PlaceMovesP2.placeShip(P,0,0, true);
+            PlaceMovesP2.placeShip(O,1,0, true);
+            PlaceMovesP2.placeShip(S,2,0, true);
+            PlaceMovesP2.placeShip(V,3,0, true);
+
+            System.out.println(ShipPlacementBoardP2);
 
             System.out.println("Lets play!");
 
 
             //Play
-            System.out.println(player1.getName() + " make your move!");
-            player1.makeMove();
-            checkWinner(player1, PlayBoardP1);
 
-            System.out.println(player2.getName() + " make your move!");
-            player2.makeMove();
-            checkWinner(player2, PlayBoardP2);
+            do{
+
+                System.out.println(player1.getName() + " make your move!");
+                player1.makeMoveAgainstOpponent(player2);
+                checkWinner(player1, ShipPlacementBoardP2);
+
+
+                System.out.println(player2.getName() + " make your move!");
+                player2.makeMoveAgainstOpponent(player1);
+                checkWinner(player2, ShipPlacementBoardP1);
+
+
+            } while(!playingGame);
 
             isFinished = true;
         }
+
     }
 
+
+
     public void checkWinner(ZeeslagPlayer player, ZeeslagBoard playBoard) {
-        if (playBoard.getDestroyedShips().size() == 4) {
+        if (playBoard.getDestroyedShips().size() == 1) {
             declareWinner(player);
-            isFinished = true;
+            playingGame = true;
+
+
         }
     }
 

@@ -3,7 +3,7 @@ package Zeeslag;
 import Game.Moveable;
 import Game.Board;
 import Game.IllegalMoveException;
-import Game.*;
+
 public class Moves implements Moveable {
 
 
@@ -38,7 +38,6 @@ public class Moves implements Moveable {
         }
 
     }
-
 
     //-------------------------------METHODS--------------------------------
 
