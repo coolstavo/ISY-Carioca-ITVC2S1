@@ -31,4 +31,5 @@ public class ZeeslagBoard extends Board {
     public void placeShip(Ship ship) {
         placedShips.add(ship);
     }
+    
 }

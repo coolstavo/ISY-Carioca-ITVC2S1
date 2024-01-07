@@ -82,4 +82,5 @@ public class Ship {
     public String toString() {
         return this.type + " (" + this.representation + ")";
     }
+
 }
