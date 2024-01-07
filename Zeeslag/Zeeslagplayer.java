@@ -1,7 +1,0 @@
-package Zeeslag;
-
-class ZeeslagPlayer {
-
-
-
-}

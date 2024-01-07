@@ -18,6 +18,8 @@ public class Ship {
     private String type;
     private int length;
     private String representation;  // Representation of the ship (first letter of the type)
+
+    //
     private int startRow;  // Added property to store the start row
     private int startColumn;  // Added property to store the start column
     private boolean isHorizontal;  // Added property to store the orientation
@@ -52,6 +54,9 @@ public class Ship {
     public String getRepresentation() {
         return representation;
     }
+
+
+    //
 
     public int getStartRow() {
         return startRow;

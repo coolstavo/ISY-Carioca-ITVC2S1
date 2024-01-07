@@ -34,7 +34,6 @@ public class ZeeslagBoard extends Board {
     }
 
 
-    @Override
     public boolean isShipAlreadyPlaced(int row, int column) {
         for (Ship ship : placedShips) {
             if (row == ship.getStartRow() && column == ship.getStartColumn()) {
@@ -43,6 +42,7 @@ public class ZeeslagBoard extends Board {
         }
         return false;
     }
+
 
     public Ship getShipAt(int row, int column) {
         for (Ship ship : placedShips) {

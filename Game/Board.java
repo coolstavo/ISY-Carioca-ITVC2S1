@@ -64,13 +64,13 @@ public abstract class Board {
         StringBuilder result = new StringBuilder();
 
         int rows = 0;
-        int collumns = 0;
+        int columns = 0;
 
         result.append("  ");
 
         for (int i = 0; i < this.nrOfColumns; i++) {
 
-            result.append(" ").append(collumns++).append(" ");
+            result.append(" ").append(columns++).append(" ");
         }
         result.append('\n');
 
@@ -91,5 +91,4 @@ public abstract class Board {
         return result.toString();
     }
 
-    public abstract boolean isShipAlreadyPlaced(int row, int column);
 }

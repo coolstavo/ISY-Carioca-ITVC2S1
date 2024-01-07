@@ -147,30 +147,4 @@ public class ConnectScreen extends BaseTemplate {
         }
     }
 
-
-    /*
-     * Method: createStatusButtonPanel
-     * Creates and adds a status button panel with a button indicating the connection status.
-     */
-//    private void createStatusButtonPanel() {
-//        JButton connectedButton = new JButton("Online");
-//        connectedButton.setBackground(Color.GREEN);
-//        connectedButton.setVisible(false);
-//
-//        JPanel statusButtonPanel = new JPanel();
-//        statusButtonPanel.add(connectedButton);
-//        panel.add(statusButtonPanel, BorderLayout.SOUTH);
-//    }
-
-    /*
-     * Method: main
-     * Entry point for the ConnectScreen application. Creates and displays the server connection screen.
-     */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            // Create and display the server connection screen
-            ConnectScreen serverConnectScreen = new ConnectScreen("Server Connection");
-            serverConnectScreen.show();
-        });
-    }
 }

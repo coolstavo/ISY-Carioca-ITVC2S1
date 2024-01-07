@@ -86,6 +86,7 @@ public class Moves implements Moveable {
     }
 
     public Ship placeHit(int row, int column) throws IllegalMoveException {
+
         // Check if the move is within the board
         if (row < 0 || row >= board.getNrOfRows() || column < 0 || column >= board.getNrOfColumns()) {
             throw new IllegalMoveException("Illegal move: Coordinates are outside the board" + "(" + row + "," + column + ")");

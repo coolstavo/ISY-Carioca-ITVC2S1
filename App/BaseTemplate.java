@@ -19,12 +19,12 @@ public abstract class BaseTemplate {
         frame.setVisible(true);
     }
 
-    protected void show() {
+    public void show() {
         // Make the frame visible when the show() method is called
         frame.setVisible(true);
     }
 
-    protected void hide() {
+    public void hide() {
         // Hide the frame
         frame.setVisible(false);
     }
