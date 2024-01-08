@@ -72,10 +72,10 @@ public  class ZeeslagPlayer extends Player {
         while (!validMove) {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.println(getName()+" playBoard");
+            System.out.println(getName()+"'s playBoard");
             System.out.println(playBoard);
             System.out.println("------------------------------------------------");
-            System.out.println(getName()+"s shipBoard");
+            System.out.println(getName()+"'s shipBoard");
             System.out.println(shipPlacementBoard);
             System.out.println("------------------------------------------------");
 

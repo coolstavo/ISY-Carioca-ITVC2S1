@@ -110,13 +110,21 @@ public class Game {
             PlaceMovesP1.placeShip(S,4,0, true);
             PlaceMovesP1.placeShip(V,6,0, true);
 
+            System.out.println(this.player1.toString()+"'s shipBoard");
+            System.out.println("------------------------------------------------");
+
             System.out.println(ShipPlacementBoardP1);
+
+
 
             PlaceMovesP2.placeShip(P,0,0, true);
             PlaceMovesP2.placeShip(O,1,0, true);
             PlaceMovesP2.placeShip(S,2,0, true);
             PlaceMovesP2.placeShip(V,3,0, true);
 
+
+            System.out.println(this.player2.toString()+"'s shipBoard");
+            System.out.println("------------------------------------------------");
             System.out.println(ShipPlacementBoardP2);
 
             System.out.println("Lets play!");
@@ -144,6 +152,7 @@ public class Game {
                 checkWinner(player1, ShipPlacementBoardP2);
                 if (playingGame) {
                     System.out.println(player1.getName() + " wins!");
+                    // The game is finished, no need for further player turns
                     isFinished = true;
                     break;
                 }
@@ -153,28 +162,21 @@ public class Game {
                 checkWinner(player2, ShipPlacementBoardP1);
                 if (playingGame) {
                     System.out.println(player2.getName() + " wins!");
+                    // The game is finished, no need for further player turns
                     isFinished = true;
                     break;
                 }
             }
 
-// The game is finished, no need for further player turns
 
-
-
-
-            isFinished = true;
         }
 
     }
-
-
 
     public void checkWinner(ZeeslagPlayer player, ZeeslagBoard playBoard) {
         if (playBoard.getDestroyedShips().size() == 1) {
             declareWinner(player);
             playingGame = true;
-
 
         }
     }

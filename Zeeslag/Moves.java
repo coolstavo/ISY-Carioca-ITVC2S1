@@ -43,7 +43,7 @@ public class Moves implements Moveable {
     public boolean checkMiss(int row, int column) throws IllegalMoveException {
 
         // Check if move is withing the board
-        if (board.getBoard().get(row).get(column).equals("")) {
+        if (board.getBoard().get(row).get(column).equals(" ")) {
             return true;
         } else {
             return false;
@@ -102,8 +102,15 @@ public class Moves implements Moveable {
     public void placeHit(int row, int column) throws IllegalMoveException {
         // Check if the cell is occupied by a ship
         placeMove(row, column, HIT);
+        // Check if the ship is sunk
+        for (Ship ship : board.getPlacedShips()) {
+            if (board.isShipSunk(ship)) {
+                System.out.println("Ship " + ship.getType() + " has been sunk!");
+            }
+        }
     }
 }
+
 
 //
 //        if (!board.getBoard().get(row).get(column).equals(" ")) {
