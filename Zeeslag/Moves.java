@@ -3,7 +3,7 @@ package Zeeslag;
 import Game.Moveable;
 import Game.Board;
 import Game.IllegalMoveException;
-import Game.*;
+
 public class Moves implements Moveable {
 
 
@@ -39,6 +39,18 @@ public class Moves implements Moveable {
 
     }
 
+    @Override
+    public boolean checkMiss(int row, int column) throws IllegalMoveException {
+
+        // Check if move is withing the board
+        if (board.getBoard().get(row).get(column).equals(" ")) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
 
     //-------------------------------METHODS--------------------------------
 
@@ -56,10 +68,10 @@ public class Moves implements Moveable {
             for (int i = startColumn; i < startColumn + shipLength; i++) {
 
                 if (startColumn + ship.getLength() > board.getNrOfColumns()) {
-                    throw new IllegalMoveException("Invalid ship placement " +"("+ ship.getType() + ")");
+                    throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
 
                 } else if (!checkMove(startRow, i)) {
-                    throw new IllegalMoveException("Invalid ship placement " +"("+ ship.getType() + ")");
+                    throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
 
                 } else {
                     placeMove(startRow, i, ship.getRepresentation());  // Set ship type on the board
@@ -73,11 +85,11 @@ public class Moves implements Moveable {
             // Check if the ship can be placed on the board (vertical)
             for (int i = startRow; i < startRow + shipLength; i++) {
 
-                if (startRow + ship.getLength() > board.getNrOfRows()){
-                    throw new IllegalMoveException("Invalid ship placement " +"("+ ship.getType() + ")");
+                if (startRow + ship.getLength() > board.getNrOfRows()) {
+                    throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
 
                 } else if (!checkMove(i, startColumn) && startRow + ship.getLength() > 8) {
-                    throw new IllegalMoveException("Invalid ship placement " +"("+ ship.getType() + ")");
+                    throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
 
                 } else {
                     placeMove(i, startColumn, ship.getRepresentation()); // Set ship type on the board
@@ -89,15 +101,34 @@ public class Moves implements Moveable {
 
     public void placeHit(int row, int column) throws IllegalMoveException {
         // Check if the cell is occupied by a ship
-        if (!board.getBoard().get(row).get(column).equals(" ")) {
-            // Place a hit on the board if the cell is occupied by a ship
-            placeMove(row, column, "X");
-            System.out.println("its a Hit!");
-        } else {
-            // Place a miss on the board if the cell is empty
-            placeMove(row, column, "O");
-            System.out.println("Its a Miss!");
+        placeMove(row, column, HIT);
+        // Check if the ship is sunk
+        for (Ship ship : board.getPlacedShips()) {
+            if (board.isShipSunk(ship)) {
+                System.out.println("Ship " + ship.getType() + " has been sunk!");
+            }
         }
     }
-
 }
+
+
+//
+//        if (!board.getBoard().get(row).get(column).equals(" ")) {
+//            // Place a hit on the board if the cell is occupied by a ship
+//            placeMove(row, column, HIT);
+////            System.out.println("It's a Hit!");
+//
+//            // Check if the ship is sunk
+//            for (Ship ship : board.getPlacedShips()) {
+//                if (board.isShipSunk(ship)) {
+//                    System.out.println("Ship " + ship.getType() + " has been sunk!");
+//                }
+//            }
+//        } else {
+//            // Place a miss on the board
+//            placeMove(row, column, MISS);
+////            System.out.println("It's a Miss!");
+//        }
+//    }
+//  }
+//}
