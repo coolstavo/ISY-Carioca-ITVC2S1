@@ -39,18 +39,6 @@ public class Moves implements Moveable {
 
     }
 
-    @Override
-    public boolean checkMiss(int row, int column) throws IllegalMoveException {
-
-        // Check if move is withing the board
-        if (board.getBoard().get(row).get(column).equals(" ")) {
-            return true;
-        } else {
-            return false;
-        }
-
-
-    }
 
     //-------------------------------METHODS--------------------------------
 
@@ -109,6 +97,19 @@ public class Moves implements Moveable {
             }
         }
     }
+
+    public boolean checkMiss(int row, int column) throws IllegalMoveException {
+
+        // Check if move is withing the board
+        if (board.getBoard().get(row).get(column).equals(" ")) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+
 }
 
 
