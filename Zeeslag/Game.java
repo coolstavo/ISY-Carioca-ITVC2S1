@@ -84,31 +84,33 @@ public class Game {
             System.out.println("------------------------------------------------");
 
             //Ship placement
-            // if (!shipsPlaced) {
-            //     System.out.println(player1.getName() + " place your ships!");
-            //     placeShips(ShipPlacementBoardP1, PlaceMovesP1);
+             if (!shipsPlaced) {
+                 System.out.println(player1.getName() + " place your ships!");
+                 placeShips(ShipPlacementBoardP1, PlaceMovesP1);
 
-            //     System.out.println("------------------------------------------------");
+                 System.out.println("------------------------------------------------");
 
-            //     System.out.println(player2.getName() + " place your ships!");
-            //     placeShips(ShipPlacementBoardP2, PlaceMovesP2);
-            //     shipsPlaced = true;
+                 System.out.println(player2.getName() + " place your ships!");
+                 placeShips(ShipPlacementBoardP2, PlaceMovesP2);
+                 shipsPlaced = true;
 
-            //     System.out.println("------------------------------------------------");
+                 System.out.println("------------------------------------------------");
 
-            //     System.out.println(player1.getName() + "'s board: ");
-            //     System.out.println(ShipPlacementBoardP1);
+                 System.out.println(player1.getName() + "'s board: ");
+                 System.out.println(ShipPlacementBoardP1);
 
-            //     System.out.println(player2.getName() + "'s board: ");
-            //     System.out.println(ShipPlacementBoardP2);
+                 System.out.println(player2.getName() + "'s board: ");
+                 System.out.println(ShipPlacementBoardP2);
+             }
 
             //     System.out.println("------------------------------------------------");
             // }
-
-            PlaceMovesP1.placeShip(P,0,0, true);
-            PlaceMovesP1.placeShip(O,2,0, true);
-            PlaceMovesP1.placeShip(S,4,0, true);
-            PlaceMovesP1.placeShip(V,6,0, true);
+            
+//            PlaceShips test
+//            PlaceMovesP1.placeShip(P,0,0, true);
+//            PlaceMovesP1.placeShip(O,2,0, true);
+//            PlaceMovesP1.placeShip(S,4,0, true);
+//            PlaceMovesP1.placeShip(V,6,0, true);
 
             System.out.println(this.player1.toString()+"'s shipBoard");
             System.out.println("------------------------------------------------");
@@ -116,11 +118,11 @@ public class Game {
             System.out.println(ShipPlacementBoardP1);
 
 
-
-            PlaceMovesP2.placeShip(P,0,0, true);
-            PlaceMovesP2.placeShip(O,1,0, true);
-            PlaceMovesP2.placeShip(S,2,0, true);
-            PlaceMovesP2.placeShip(V,3,0, true);
+//            PlaceShips test
+//            PlaceMovesP2.placeShip(P,0,0, true);
+//            PlaceMovesP2.placeShip(O,1,0, true);
+//            PlaceMovesP2.placeShip(S,2,0, true);
+//            PlaceMovesP2.placeShip(V,3,0, true);
 
 
             System.out.println(this.player2.toString()+"'s shipBoard");
@@ -193,9 +195,10 @@ public class Game {
 
                 Scanner scanner = new Scanner(System.in);
 
-                System.out.println("Place the ship: " + ship.getType() + " (" + ship.getLength() + " cells)");
-                System.out.println();
+
                 System.out.println(board);
+                System.out.println();
+                System.out.println("Place the ship: " + ship.getType() + " (" + ship.getLength() + " cells)");
                 System.out.println();
 
                 int direction;
@@ -233,8 +236,8 @@ public class Game {
 
                 // Ship is placed
                 shipPlaced = true;
-                System.out.println(board);
-                System.out.println("-----------------------------------------");
+//                System.out.println(board);
+//                System.out.println("-----------------------------------------");
 
             }
         }
