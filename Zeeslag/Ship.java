@@ -8,10 +8,10 @@ import java.util.List;
  */
 public class Ship {
 
-    private static final List<String> SHIP_TYPES = Arrays.asList("Patrouilleschip", "Onderzeeër", "Slagschip", "Vliegdekschip");
+    private static final List<String> SHIP_TYPES = Arrays.asList("Patrouilleschip", "Mijnenjager", "Slagschip", "Vliegdekschip");
 
     public static final String PATROUILLESCHIP = "Patrouilleschip";
-    public static final String ONDERZEEER = "Onderzeeër";
+    public static final String MIJNENJAGER = "Mijnenjager";
     public static final String SLAGSCHIP = "Slagschip";
     public static final String VLIEGDEKSCHIP = "Vliegdekschip";
 
@@ -63,7 +63,7 @@ public class Ship {
         switch (type) {
             case "Patrouilleschip":
                 return 2;
-            case "Onderzeeër":
+            case "Mijnenjager":
                 return 3;
             case "Slagschip":
                 return 4;

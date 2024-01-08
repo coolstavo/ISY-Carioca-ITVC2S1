@@ -23,7 +23,7 @@ public class Game {
 
     // Create ships
     Ship P;
-    Ship O;
+    Ship M;
     Ship S;
     Ship V;
 
@@ -58,21 +58,24 @@ public class Game {
 
         // Create the ships
         this.P = new Ship(Ship.PATROUILLESCHIP);
-        this.O = new Ship(Ship.ONDERZEEER);
+        this.M = new Ship(Ship.MIJNENJAGER);
         this.S = new Ship(Ship.SLAGSCHIP);
         this.V = new Ship(Ship.VLIEGDEKSCHIP);
 
-        shipsToPlace = Arrays.asList(P, O, S, V);
+        shipsToPlace = Arrays.asList(P, M, S, V);
     }
 
     public void start() throws ShipNotAvailableException, IllegalMoveException {
 
         while (!isFinished) {
 
+            // Create scanner
+            Scanner scanner = new Scanner(System.in);
+
             // Create players
             System.out.println("Welcome to Battleship!");
             System.out.println("Player 1, what is your name?: ");
-            Scanner scanner = new Scanner(System.in);
+
             String nameP1 = scanner.nextLine();
             player1 = new ZeeslagPlayer(nameP1, PlayMovesP1, PlaceMovesP1, ShipPlacementBoardP1, PlayBoardP1);
 
@@ -83,77 +86,48 @@ public class Game {
             System.out.println("Welcome " + player1.getName() + " and " + player2.getName());
             System.out.println("------------------------------------------------");
 
+
             //Ship placement
              if (!shipsPlaced) {
                  System.out.println(player1.getName() + " place your ships!");
                  placeShips(ShipPlacementBoardP1, PlaceMovesP1);
+                 System.out.println(ShipPlacementBoardP1);
 
                  System.out.println("------------------------------------------------");
 
                  System.out.println(player2.getName() + " place your ships!");
                  placeShips(ShipPlacementBoardP2, PlaceMovesP2);
-                 shipsPlaced = true;
-
-                 System.out.println("------------------------------------------------");
-
-                 System.out.println(player1.getName() + "'s board: ");
                  System.out.println(ShipPlacementBoardP1);
 
-                 System.out.println(player2.getName() + "'s board: ");
-                 System.out.println(ShipPlacementBoardP2);
+                 System.out.println("------------------------------------------------");
              }
 
-            //     System.out.println("------------------------------------------------");
-            // }
-            
-//            PlaceShips test
-//            PlaceMovesP1.placeShip(P,0,0, true);
-//            PlaceMovesP1.placeShip(O,2,0, true);
-//            PlaceMovesP1.placeShip(S,4,0, true);
-//            PlaceMovesP1.placeShip(V,6,0, true);
 
-            System.out.println(this.player1.toString()+"'s shipBoard");
+            // Print the boards
             System.out.println("------------------------------------------------");
-
+            System.out.println("------------------------------------------------");
+            System.out.println(player1.getName()+"'s shipBoard");
             System.out.println(ShipPlacementBoardP1);
-
-
-//            PlaceShips test
-//            PlaceMovesP2.placeShip(P,0,0, true);
-//            PlaceMovesP2.placeShip(O,1,0, true);
-//            PlaceMovesP2.placeShip(S,2,0, true);
-//            PlaceMovesP2.placeShip(V,3,0, true);
-
-
-            System.out.println(this.player2.toString()+"'s shipBoard");
             System.out.println("------------------------------------------------");
+
+            System.out.println(player2.getName()+"'s shipBoard");
             System.out.println(ShipPlacementBoardP2);
+            System.out.println("------------------------------------------------");
+            System.out.println("------------------------------------------------");
+            System.out.println("------------------------------------------------");
+
+
 
             System.out.println("Lets play!");
-
-
-            //Play
-
-//            do{
-//
-//                System.out.println(player1.getName() + " make your move!");
-//                player1.makeMoveAgainstOpponent(player2);
-//                checkWinner(player1, ShipPlacementBoardP2);
-//
-//
-//                System.out.println(player2.getName() + " make your move!");
-//                player2.makeMoveAgainstOpponent(player1);
-//                checkWinner(player2, ShipPlacementBoardP1);
-//
-//
-//            } while(!playingGame);
 
             while (!isFinished) {
                 System.out.println(player1.getName() + " make your move!");
                 player1.makeMoveAgainstOpponent(player2);
+
+                System.out.println("------------------------------------------------");
                 checkWinner(player1, ShipPlacementBoardP2);
+                System.out.println("------------------------------------------------");
                 if (playingGame) {
-                    System.out.println(player1.getName() + " wins!");
                     // The game is finished, no need for further player turns
                     isFinished = true;
                     break;
@@ -161,9 +135,11 @@ public class Game {
 
                 System.out.println(player2.getName() + " make your move!");
                 player2.makeMoveAgainstOpponent(player1);
+                
+                System.out.println("------------------------------------------------");
                 checkWinner(player2, ShipPlacementBoardP1);
+                System.out.println("------------------------------------------------");
                 if (playingGame) {
-                    System.out.println(player2.getName() + " wins!");
                     // The game is finished, no need for further player turns
                     isFinished = true;
                     break;
@@ -236,7 +212,7 @@ public class Game {
 
                 // Ship is placed
                 shipPlaced = true;
-//                System.out.println(board);
+
 //                System.out.println("-----------------------------------------");
 
             }
