@@ -6,4 +6,6 @@ public interface Moveable {
 
     public boolean checkMove(int row, int column) throws IllegalMoveException;
 
+    public boolean checkMiss(int row, int column) throws IllegalMoveException;
+
 }

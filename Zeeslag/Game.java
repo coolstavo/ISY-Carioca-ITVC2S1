@@ -124,19 +124,44 @@ public class Game {
 
             //Play
 
-            do{
+//            do{
+//
+//                System.out.println(player1.getName() + " make your move!");
+//                player1.makeMoveAgainstOpponent(player2);
+//                checkWinner(player1, ShipPlacementBoardP2);
+//
+//
+//                System.out.println(player2.getName() + " make your move!");
+//                player2.makeMoveAgainstOpponent(player1);
+//                checkWinner(player2, ShipPlacementBoardP1);
+//
+//
+//            } while(!playingGame);
 
+            while (!isFinished) {
                 System.out.println(player1.getName() + " make your move!");
                 player1.makeMoveAgainstOpponent(player2);
                 checkWinner(player1, ShipPlacementBoardP2);
-
+                if (playingGame) {
+                    System.out.println(player1.getName() + " wins!");
+                    isFinished = true;
+                    break;
+                }
 
                 System.out.println(player2.getName() + " make your move!");
                 player2.makeMoveAgainstOpponent(player1);
                 checkWinner(player2, ShipPlacementBoardP1);
+                if (playingGame) {
+                    System.out.println(player2.getName() + " wins!");
+                    isFinished = true;
+                    break;
+                }
+            }
+
+// The game is finished, no need for further player turns
 
 
-            } while(!playingGame);
+
 
             isFinished = true;
         }

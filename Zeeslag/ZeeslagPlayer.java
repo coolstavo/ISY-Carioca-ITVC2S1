@@ -72,6 +72,13 @@ public  class ZeeslagPlayer extends Player {
         while (!validMove) {
             Scanner scanner = new Scanner(System.in);
 
+            System.out.println(getName()+" playBoard");
+            System.out.println(playBoard);
+            System.out.println("------------------------------------------------");
+            System.out.println(getName()+"s shipBoard");
+            System.out.println(shipPlacementBoard);
+            System.out.println("------------------------------------------------");
+
             // Ask for row coordinate
             int row;
             do {
@@ -96,7 +103,7 @@ public  class ZeeslagPlayer extends Player {
 
 
             // Check the opponent's placement board for a hit or miss
-            if (opponent.placeMoves.checkMove(row, column)) {
+            if (opponent.placeMoves.checkMiss(row, column)) {
                 System.out.println("It's a MISS!");
                 opponent.placeMoves.placeMove(row, column, Moves.MISS);
 
@@ -112,11 +119,12 @@ public  class ZeeslagPlayer extends Player {
             }
 
             // Add any extra logic related to the move
-            System.out.println(getName()+" playBoard");
-            System.out.println(playBoard);
-            System.out.println("------------------------------------------------");
-            System.out.println(shipPlacementBoard);
-            System.out.println("------------------------------------------------");
+//            System.out.println(getName()+" playBoard");
+//            System.out.println(playBoard);
+//            System.out.println("------------------------------------------------");
+//            System.out.println(getName()+"s shipBoard");
+//            System.out.println(shipPlacementBoard);
+//            System.out.println("------------------------------------------------");
 
 
             validMove = true; // Mark the move as valid to exit the loop
