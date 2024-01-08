@@ -4,6 +4,8 @@ import Game.Moveable;
 import Game.Board;
 import Game.IllegalMoveException;
 
+import java.util.ArrayList;
+
 public class Moves implements Moveable {
 
 
@@ -50,7 +52,7 @@ public class Moves implements Moveable {
 //      checks if placement is valid, if not throws exception.
         if (isHorizontal) {
              for (int i = startColumn; i < startColumn + shipLength; i++) {
-                if (!IsPlacementValid(startRow, startColumn, ship)) {
+                if (!IsPlacementValid(startRow, startColumn, ship, isHorizontal)) {
                     throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
                 }
             }
@@ -72,7 +74,7 @@ public class Moves implements Moveable {
 
         } else {
             for (int i = startRow; i < startRow + shipLength; i++) {
-                if (!IsPlacementValid(startRow, startColumn, ship)) {
+                if (!IsPlacementValid(startRow, startColumn, ship, isHorizontal)) {
                     throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
                 }
             }
@@ -93,48 +95,76 @@ public class Moves implements Moveable {
         }
     }
 
-    public boolean IsPlacementValid(int r, int c, Ship ship) {
-        String excluded = ship.getRepresentation();
-        boolean result = false;
-        if (c>=0 && c<=board.getNrOfColumns()){
-            if (r>=0 && r<=board.getNrOfRows()){
-                if (c==0){
-                    if (r==0){
-                        if (    board.getBoard().get(r).get(c).equals(" ") || board.getBoard().get(r).get(c).equals(excluded)
-                                && board.getBoard().get(r+1).get(c).equals(" ") || board.getBoard().get(r+1).get(c).equals(excluded)
-                                && board.getBoard().get(r+1).get(c+1).equals(" " ) || board.getBoard().get(r+1).get(c+1).equals(excluded)
-                                && board.getBoard().get(r).get(c+1).equals(" ") || board.getBoard().get(r).get(c+1).equals(excluded)
-                        ){
-                            result = true;
-                        }
-                    } else if (r>=1 && r < board.getNrOfRows()) {
-                        if (    board.getBoard().get(r).get(c).equals(" ") || board.getBoard().get(r).get(c).equals(excluded)
-                                && board.getBoard().get(r+1).get(c).equals(" ") || board.getBoard().get(r+1).get(c).equals(excluded)
-                                && board.getBoard().get(r+1).get(c+1).equals(" " ) || board.getBoard().get(r+1).get(c+1).equals(excluded)
-                                && board.getBoard().get(r).get(c+1).equals(" ") || board.getBoard().get(r).get(c+1).equals(excluded)
-                                && board.getBoard().get(r-1).get(c+1).equals(" ") || board.getBoard().get(r-1).get(c+1).equals(excluded)
-                                && board.getBoard().get(r-1).get(c).equals(" ") || board.getBoard().get(r-1).get(c-1).equals(excluded)
-                        ){
-                            result = true;
-                        }
-                    } else if (r== board.getNrOfRows()) {
-                        if (    board.getBoard().get(r).get(c).equals(" ") || board.getBoard().get(r).get(c).equals(excluded)
-                                && board.getBoard().get(r).get(c+1).equals(" ") || board.getBoard().get(r).get(c+1).equals(excluded)
-                                && board.getBoard().get(r-1).get(c+1).equals(" ") || board.getBoard().get(r-1).get(c+1).equals(excluded)
-                                && board.getBoard().get(r-1).get(c).equals(" ") || board.getBoard().get(r-1).get(c-1).equals(excluded)
-                        ){
-                            result = true;
-                        }
-                    }
-                }
-                if (c== board.getNrOfColumns()){
-
-               }
-        }
-
-
-        }
-        return result;
+    public boolean IsPlacementValid(int r, int c, Ship ship, boolean isHorizontal) {
+        if(isNearShip(ship, r, c, isHorizontal)) return false;
+        else return true;
     }
 
+    public ArrayList<int[]> getAllNearPositions(int row, int column) {
+        ArrayList<int[]> list = new ArrayList<>();
+        //up
+        if (row - 1 >= 0) list.add(new int[] {row - 1, column});
+
+        //down
+        if (row + 1 < board.getNrOfRows()) list.add(new int[]{row + 1, column});
+
+        //right
+        if (column + 1 < board.getNrOfColumns()) list.add(new int[]{row, column + 1});
+
+        //left
+        if (column - 1 >= 0) list.add(new int[]{row, column - 1});
+
+        //up & right
+        if (row - 1 >= 0 && column + 1 < board.getNrOfColumns()) list.add(new int[]{row - 1, column + 1});
+
+        //up & left
+        if (row - 1 >= 0 && column - 1 >= 0) list.add(new int[]{row - 1, column - 1});
+
+        //down & right
+        if (row + 1 < board.getNrOfRows() && column + 1 < board.getNrOfColumns()) list.add(new int[]{row + 1, column + 1});
+
+        //down & left
+        if (row + 1 < board.getNrOfRows() && column - 1 >= 0) list.add(new int[]{row + 1, column - 1});
+        return list;
+    }
+
+    public boolean isNearShip(Ship ship, int startRow, int startColumn, boolean isHorizontal) {
+        // ...
+        int k;
+        int length = ship.getLength();
+
+        if (isHorizontal) k = startColumn;
+        else k = startRow;
+        for (int i = 0; i < ship.getLength() && k + i < length - 1; i++) {
+            if (isShipAround(startRow, startColumn, ship)) return true;
+
+            if (isHorizontal) startColumn++;
+            else startRow++;
+        }
+        return false;
+    }
+
+    private boolean isShipAround(int startRow, int startColumn, Ship ship) {
+    ArrayList<int[]> list = getAllNearPositions(startRow, startColumn);
+    for (int[] position : list) {
+        int row = position[0];
+        int column = position[1];
+
+        // Check if there is a ship at the specified position
+        if (!board.getBoard().get(row).get(column).equals(" ")) {
+            return true;
+        }
+    }
+    return false;
 }
+
+
+//         private boolean isShipAround(int startRow, int startColumn){
+//             ArrayList<int[]> list = getAllNearPositions(startRow, startColumn);
+//             for (int[] position : list){
+//                 if(board.getBoard().get(position[0]).equals(" "))return true;
+//             }
+//             return false;
+//         }
+    }
+
