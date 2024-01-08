@@ -8,7 +8,7 @@ import Zeeslag.ShipNotAvailableException;
 public class Main {
 
     public static void main(String[] args) throws ShipNotAvailableException, IllegalMoveException {
-        ZeeslagBoard board = new ZeeslagBoard(8, 12);
+        ZeeslagBoard board = new ZeeslagBoard(8, 8);
         Moves moves = new Moves(board);
         Ship P = new Ship("Patrouilleschip");
         Ship O = new Ship("Onderzeeër");
@@ -16,10 +16,10 @@ public class Main {
         Ship V = new Ship("Vliegdekschip");
 
         moves.placeShip(P, 2, 0, true);
-        moves.placeShip(O, 1, 0, true);
+//        moves.placeShip(O, 1, 0, true);
 
         // Check if the placement is valid for the given position
-        boolean isValidPlacement = moves.IsPlacementValid(1, 0);
+        boolean isValidPlacement = moves.IsPlacementValid(1, 0, O);
 
         // Use the result of the validation
         if (isValidPlacement) {
@@ -28,7 +28,7 @@ public class Main {
             System.out.println("Placement is invalid. Please choose another position.");
         }
 
-        System.out.println(board.getBoard());
+//        System.out.println(board.getBoard());
         System.out.println(board);
         System.out.println();
         System.out.println(board.getPlacedShips());
