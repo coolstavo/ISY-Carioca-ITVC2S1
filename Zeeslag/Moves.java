@@ -91,13 +91,70 @@ public class Moves implements Moveable {
         // Check if the cell is occupied by a ship
         if (!board.getBoard().get(row).get(column).equals(" ")) {
             // Place a hit on the board if the cell is occupied by a ship
-            placeMove(row, column, "X");
-            System.out.println("its a Hit!");
+            placeMove(row, column, HIT);
+            System.out.println("It's a Hit!");
+
+            // Check if the ship is sunk
+            for (Ship ship : board.getPlacedShips()) {
+                if (board.isShipSunk(ship)) {
+                    System.out.println("Ship " + ship.getType() + " has been sunk!");
+
+                    // Mark the surrounding area with miss marks
+                    markSurroundingArea(ship, row, column);
+                }
+            }
         } else {
-            // Place a miss on the board if the cell is empty
-            placeMove(row, column, "O");
-            System.out.println("Its a Miss!");
+            // Place a miss on the board
+            placeMove(row, column, MISS);
+            System.out.println("It's a Miss!");
         }
     }
+    private void markSurroundingArea(Ship ship, int hitRow, int hitColumn) throws IllegalMoveException {
+        int shipLength = ship.getLength();
+
+        // Check if the ship is fully sunk
+        if (board.isShipSunk(ship)) {
+            // Infer the ship's orientation based on the ship's length
+            boolean isHorizontal = shipLength > 1;
+
+            // Define the surrounding coordinates
+            int[] rowOffsets;
+            int[] colOffsets;
+
+            if (isHorizontal) {
+                rowOffsets = new int[]{ shipLength - shipLength, shipLength - shipLength};
+                colOffsets = new int[]{ shipLength -shipLength +1,-shipLength };
+            } else {
+                rowOffsets = new int[]{0, -1, 1, -1, 1, -1, 1, shipLength};
+                colOffsets = new int[]{0, 0, 0, -1, -1, 1, 1, 0};
+            }
+
+            for (int i = 0; i < rowOffsets.length; i++) {
+                int row = hitRow + rowOffsets[i];
+                int column = hitColumn + colOffsets[i];
+
+                // Check if the coordinates are within the board boundaries using checkMove
+                if (checkMove(row, column)) {
+                    // Skip the cell where the ship was hit
+                    if (!(row == hitRow && column == hitColumn) && !board.getBoard().get(row).get(column).equals(HIT)) {
+                        placeMove(row, column, MISS);
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

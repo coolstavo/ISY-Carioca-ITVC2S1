@@ -32,5 +32,18 @@ public class ZeeslagBoard extends Board {
         placedShips.add(ship);
     }
 
+    public boolean isShipSunk(Ship ship) {
+        for (int row = 0; row < getNrOfRows(); row++) {
+            for (int column = 0; column < getNrOfColumns(); column++) {
+                if (getBoard().get(row).get(column).equals(ship.getRepresentation())) {
+                    return false;  // The ship is not fully hit, so it's not sunk
+                }
+            }
+        }
+        return true;  // The ship is fully hit, so it's sunk
+    }
+
+
+
 }
 
