@@ -51,7 +51,7 @@ public class Moves implements Moveable {
         }
 //      checks if placement is valid, if not throws exception.
         if (isHorizontal) {
-            if(IsPlacementValid(ship, startRow, startColumn, true)){
+            if (IsPlacementValid(ship, startRow, startColumn, true)) {
                 // Check if the ship can be placed on the board (horizontal)
                 for (int i = startColumn; i < startColumn + shipLength; i++) {
 
@@ -66,12 +66,12 @@ public class Moves implements Moveable {
                     }
                 }
                 board.placeShip(ship);  // Add ship to the list of placed ships
-            }else {
+            } else {
                 System.out.printf("You cannot place an %s here\n", ship.getType());
             }
         } else {
-            if(IsPlacementValid(ship, startRow, startColumn, false)){
-            // Check if the ship can be placed on the board (vertical)
+            if (IsPlacementValid(ship, startRow, startColumn, false)) {
+                // Check if the ship can be placed on the board (vertical)
                 for (int i = startRow; i < startRow + shipLength; i++) {
 
                     if (startRow + ship.getLength() > board.getNrOfRows()) {
@@ -85,21 +85,21 @@ public class Moves implements Moveable {
                     }
                 }
                 board.placeShip(ship);  // Add ship to the list of placed ships
-            }else {
+            } else {
                 System.out.printf("You cannot place an %s here \n", ship.getType());
             }
         }
     }
 
     public boolean IsPlacementValid(Ship ship, int row, int column, boolean isHorizontal) {
-        if(isNearShip(ship, row, column, isHorizontal)) return false;
+        if (isNearShip(ship, row, column, isHorizontal)) return false;
         else return true;
     }
 
     public ArrayList<int[]> getAllNearPositions(int row, int column) {
         ArrayList<int[]> list = new ArrayList<>();
         //up
-        if (row - 1 >= 0) list.add(new int[] {row - 1, column});
+        if (row - 1 >= 0) list.add(new int[]{row - 1, column});
 
         //down
         if (row + 1 < board.getNrOfRows()) list.add(new int[]{row + 1, column});
@@ -117,7 +117,8 @@ public class Moves implements Moveable {
         if (row - 1 >= 0 && column - 1 >= 0) list.add(new int[]{row - 1, column - 1});
 
         //down & right
-        if (row + 1 < board.getNrOfRows() && column + 1 < board.getNrOfColumns()) list.add(new int[]{row + 1, column + 1});
+        if (row + 1 < board.getNrOfRows() && column + 1 < board.getNrOfColumns())
+            list.add(new int[]{row + 1, column + 1});
 
         //down & left
         if (row + 1 < board.getNrOfRows() && column - 1 >= 0) list.add(new int[]{row + 1, column - 1});
@@ -125,14 +126,16 @@ public class Moves implements Moveable {
     }
 
     public boolean isNearShip(Ship ship, int startRow, int startColumn, boolean isHorizontal) {
-        // ...
+        /**
+         *
+         */
         int k;
         int length = ship.getLength();
 
         if (isHorizontal) k = startColumn;
         else k = startRow;
         for (int i = 0; i < ship.getLength() && k + i < length - 1; i++) {
-            if (isShipAround(startRow, startColumn, ship)) return true;
+            if (isShipAround(startRow, startColumn)) return true;
 
             if (isHorizontal) startColumn++;
             else startRow++;
@@ -140,27 +143,26 @@ public class Moves implements Moveable {
         return false;
     }
 
-    private boolean isShipAround(int startRow, int startColumn, Ship ship) {
-    ArrayList<int[]> list = getAllNearPositions(startRow, startColumn);
-    for (int[] position : list) {
-        int row = position[0];
-        int column = position[1];
+    private boolean isShipAround(int startRow, int startColumn) {
+        /**
+         * Given a coordinate, checks all surrounding spaces if they are empty
+         * @param Coordinates of a position
+         * @return false if all spaces are empty true otherwise
+         */
 
-        // Check if there is a ship at the specified position
-        if (!board.getBoard().get(row).get(column).equals(" ")) {
-            return true;
+        //Make a list with all positions that are to be checked
+        ArrayList<int[]> list = getAllNearPositions(startRow, startColumn);
+        //loop through all checkable positions
+        for (int[] position : list) {
+            // take the row and column out of the int array
+            int row = position[0];
+            int column = position[1];
+            // Check if there is a ship at the specified position
+            if (!board.getBoard().get(row).get(column).equals(" ")) {
+                return true;
+            }
         }
+        return false;
     }
-    return false;
 }
-
-
-//         private boolean isShipAround(int startRow, int startColumn){
-//             ArrayList<int[]> list = getAllNearPositions(startRow, startColumn);
-//             for (int[] position : list){
-//                 if(board.getBoard().get(position[0]).equals(" "))return true;
-//             }
-//             return false;
-//         }
-    }
 
