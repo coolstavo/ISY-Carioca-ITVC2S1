@@ -23,11 +23,18 @@ public  class ZeeslagPlayer extends Player {
         this.playBoard = playBoard;
     }
 
-    public void makeMove() throws IllegalMoveException {
+    public void makeMoveAgainstOpponent(ZeeslagPlayer opponent) throws IllegalMoveException {
         boolean validMove = false;
 
         while (!validMove) {
             Scanner scanner = new Scanner(System.in);
+
+            System.out.println(getName()+"'s playBoard");
+            System.out.println(playBoard);
+            System.out.println("------------------------------------------------");
+            System.out.println(getName()+"'s shipBoard");
+            System.out.println(shipPlacementBoard);
+            System.out.println("------------------------------------------------");
 
             // Ask for row coordinate
             int row;
@@ -51,22 +58,35 @@ public  class ZeeslagPlayer extends Player {
                 }
             } while (!isValidColumn(column));
 
-            // Check if the move is valid (i.e., the cell is empty) and place the move
-            if (!playMoves.checkMove(row, column)) {
-                System.out.println("You already shot here, try again.");
+
+            // Check the opponent's placement board for a hit or miss
+            if (opponent.placeMoves.checkMiss(row, column)) {
+                System.out.println("It's a MISS!");
+                opponent.placeMoves.placeMove(row, column, Moves.MISS);
+
+                // Update your play board with the result
+                playMoves.placeMove(row, column, Moves.MISS);
+
             } else {
-                playMoves.placeMove(row, column, "X");
+                System.out.println("It's a HIT!");
+                opponent.placeMoves.placeHit(row, column);
+
+                // Update your play board with the result
+                playMoves.placeMove(row, column, Moves.HIT);
             }
 
             // Add any extra logic related to the move
-            System.out.println(playBoard);
-            System.out.println("------------------------------------------------");
+//            System.out.println(getName()+" playBoard");
+//            System.out.println(playBoard);
+//            System.out.println("------------------------------------------------");
+//            System.out.println(getName()+"s shipBoard");
+//            System.out.println(shipPlacementBoard);
+//            System.out.println("------------------------------------------------");
+
 
             validMove = true; // Mark the move as valid to exit the loop
         }
     }
-
-
 
     private boolean isValidRow(int row) {
         // Add your validation logic for X-coordinate here
