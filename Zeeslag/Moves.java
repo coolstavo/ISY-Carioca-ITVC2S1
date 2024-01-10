@@ -51,52 +51,48 @@ public class Moves implements Moveable {
         }
 //      checks if placement is valid, if not throws exception.
         if (isHorizontal) {
-             for (int i = startColumn; i < startColumn + shipLength; i++) {
-                if (!IsPlacementValid(startRow, startColumn, ship, isHorizontal)) {
-                    throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
+            if(IsPlacementValid(ship, startRow, startColumn, true)){
+                // Check if the ship can be placed on the board (horizontal)
+                for (int i = startColumn; i < startColumn + shipLength; i++) {
+
+                    if (startColumn + ship.getLength() > board.getNrOfColumns()) {
+                        throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
+
+                    } else if (!checkMove(startRow, i)) {
+                        throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
+
+                    } else {
+                        placeMove(startRow, i, ship.getRepresentation());  // Set ship type on the board
+                    }
                 }
+                board.placeShip(ship);  // Add ship to the list of placed ships
+            }else {
+                System.out.printf("You cannot place an %s here\n", ship.getType());
             }
-            // Check if the ship can be placed on the board (horizontal)
-            for (int i = startColumn; i < startColumn + shipLength; i++) {
-
-                if (startColumn + ship.getLength() > board.getNrOfColumns()) {
-                    throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
-
-                } else if (!checkMove(startRow, i)) {
-                    throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
-
-                } else {
-                    placeMove(startRow, i, ship.getRepresentation());  // Set ship type on the board
-                }
-            }
-            board.placeShip(ship);  // Add ship to the list of placed ships
-
-
         } else {
-            for (int i = startRow; i < startRow + shipLength; i++) {
-                if (!IsPlacementValid(startRow, startColumn, ship, isHorizontal)) {
-                    throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
-                }
-            }
+            if(IsPlacementValid(ship, startRow, startColumn, false)){
             // Check if the ship can be placed on the board (vertical)
-            for (int i = startRow; i < startRow + shipLength; i++) {
+                for (int i = startRow; i < startRow + shipLength; i++) {
 
-                if (startRow + ship.getLength() > board.getNrOfRows()) {
-                    throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
+                    if (startRow + ship.getLength() > board.getNrOfRows()) {
+                        throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
 
-                } else if (!checkMove(i, startColumn) && startRow + ship.getLength() > 8) {
-                    throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
+                    } else if (!checkMove(i, startColumn) && startRow + ship.getLength() > 8) {
+                        throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
 
-                } else {
-                    placeMove(i, startColumn, ship.getRepresentation()); // Set ship type on the board
+                    } else {
+                        placeMove(i, startColumn, ship.getRepresentation()); // Set ship type on the board
+                    }
                 }
+                board.placeShip(ship);  // Add ship to the list of placed ships
+            }else {
+                System.out.printf("You cannot place an %s here \n", ship.getType());
             }
-            board.placeShip(ship);  // Add ship to the list of placed ships
         }
     }
 
-    public boolean IsPlacementValid(int r, int c, Ship ship, boolean isHorizontal) {
-        if(isNearShip(ship, r, c, isHorizontal)) return false;
+    public boolean IsPlacementValid(Ship ship, int row, int column, boolean isHorizontal) {
+        if(isNearShip(ship, row, column, isHorizontal)) return false;
         else return true;
     }
 

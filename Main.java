@@ -16,19 +16,8 @@ public class Main {
         Ship V = new Ship("Vliegdekschip");
 
         moves.placeShip(P, 2, 0, true);
-//        moves.placeShip(O, 1, 0, true);
+        moves.placeShip(O, 1, 0, true);
 
-        // Check if the placement is valid for the given position
-        boolean isValidPlacement = moves.IsPlacementValid(1, 0, O);
-
-        // Use the result of the validation
-        if (isValidPlacement) {
-            System.out.println("Placement is valid.");
-        } else {
-            System.out.println("Placement is invalid. Please choose another position.");
-        }
-
-//        System.out.println(board.getBoard());
         System.out.println(board);
         System.out.println();
         System.out.println(board.getPlacedShips());
