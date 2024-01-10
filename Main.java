@@ -8,7 +8,6 @@ public class Main {
 
     public static void main(String[] args) throws ShipNotAvailableException, IllegalMoveException {
 
-        Connection connection = new Connection("localhost",7789);
 
     }
 }
