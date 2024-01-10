@@ -89,14 +89,12 @@ public class Moves implements Moveable {
 
 
     public boolean checkMiss(int row, int column) throws IllegalMoveException {
-
         // Check if move is withing the board
         if (board.getBoard().get(row).get(column).equals(" ")) {
             return true;
         } else {
             return false;
         }
-
     }
 
 
@@ -121,6 +119,7 @@ public class Moves implements Moveable {
             System.out.println("It's a Miss!");
         }
     }
+
 
     private void markSurroundingArea(Ship ship, int hitRow, int hitColumn) throws IllegalMoveException {
         int shipLength = ship.getLength();
@@ -192,29 +191,4 @@ public class Moves implements Moveable {
             }
         }
     }
-
-
-
 }
-
-
-//
-//        if (!board.getBoard().get(row).get(column).equals(" ")) {
-//            // Place a hit on the board if the cell is occupied by a ship
-//            placeMove(row, column, HIT);
-////            System.out.println("It's a Hit!");
-//
-//            // Check if the ship is sunk
-//            for (Ship ship : board.getPlacedShips()) {
-//                if (board.isShipSunk(ship)) {
-//                    System.out.println("Ship " + ship.getType() + " has been sunk!");
-//                }
-//            }
-//        } else {
-//            // Place a miss on the board
-//            placeMove(row, column, MISS);
-////            System.out.println("It's a Miss!");
-//        }
-//    }
-//  }
-//}
