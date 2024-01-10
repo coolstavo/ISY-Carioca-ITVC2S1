@@ -97,7 +97,6 @@ public class Moves implements Moveable {
             return false;
         }
 
-
     }
 
 
@@ -106,7 +105,6 @@ public class Moves implements Moveable {
         if (!board.getBoard().get(row).get(column).equals(" ")) {
             // Place a hit on the board if the cell is occupied by a ship
             placeMove(row, column, HIT);
-            System.out.println("It's a Hit!");
 
             // Check if the ship is sunk
             for (Ship ship : board.getPlacedShips()) {
@@ -129,7 +127,7 @@ public class Moves implements Moveable {
 
         // Check if the ship is fully sunk
         if (board.isShipSunk(ship)) {
-            System.out.println(board.getNrOfColumns());
+
             // Infer the ship's orientation based on the ship's length
             boolean isHorizontal;
             // Check adjacent cells to determine the ship's orientation
@@ -141,7 +139,6 @@ public class Moves implements Moveable {
                 isHorizontal = true;
             } else {}
             isHorizontal = false;
-            System.out.println(isHorizontal);
 
 
             // Initialize rowOffsets and colOffsets with empty arrays
