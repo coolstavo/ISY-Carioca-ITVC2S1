@@ -69,23 +69,21 @@ public abstract class Board {
         result.append("  ");
 
         for (int i = 0; i < this.nrOfColumns; i++) {
-
             result.append(" ").append(columns++).append(" ");
         }
+
         result.append('\n');
 
         // Iterate through the board elements
         for (List<String> row : this.board) {
-            // Print the values in the current row
 
+            // Print the values in the current row
             result.append(rows++).append(" ");
 
             for (String value : row) {
-
                 result.append("[").append(value).append("]");
             }
             result.append("\n");
-
         }
 
         return result.toString();
