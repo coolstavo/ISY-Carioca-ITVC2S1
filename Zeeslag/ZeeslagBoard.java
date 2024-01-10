@@ -64,4 +64,3 @@ public class ZeeslagBoard extends Board {
         return true;
     }
 }
-
