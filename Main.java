@@ -1,5 +1,4 @@
 import Game.IllegalMoveException;
-import Server.Connection;
 import Zeeslag.*;
 
 import java.util.Scanner;
