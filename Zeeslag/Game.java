@@ -8,33 +8,33 @@ import Game.IllegalMoveException;
 public class Game {
 
     // Create boards and moves for player 1
-    ZeeslagPlayer player1;
-    ZeeslagBoard ShipPlacementBoardP1;
-    ZeeslagBoard PlayBoardP1;
-    Moves PlaceMovesP1;
-    Moves PlayMovesP1;
+    private ZeeslagPlayer player1;
+    private ZeeslagBoard ShipPlacementBoardP1;
+    private ZeeslagBoard PlayBoardP1;
+    private Moves PlaceMovesP1;
+    private  Moves PlayMovesP1;
 
     // Create boards and moves for player 2
-    ZeeslagPlayer player2;
-    ZeeslagBoard ShipPlacementBoardP2;
-    ZeeslagBoard PlayBoardP2;
-    Moves PlaceMovesP2;
-    Moves PlayMovesP2;
+    private ZeeslagPlayer player2;
+    private ZeeslagBoard ShipPlacementBoardP2;
+    private ZeeslagBoard PlayBoardP2;
+    private  Moves PlaceMovesP2;
+    private  Moves PlayMovesP2;
 
     // Create ships
-    Ship P;
-    Ship M;
-    Ship S;
-    Ship V;
+    private Ship P;
+    private Ship M;
+    private  Ship S;
+    private  Ship V;
 
     // Create list of ships to place
-    List<Ship> shipsToPlace;
+    private List<Ship> shipsToPlace;
 
 
     // Create boolean to check if the game is finished and if the ships are placed
-    boolean isFinished = false;
-    boolean shipsPlaced = false;
-    boolean playingGame = false;
+    private boolean isFinished = false;
+    private  boolean shipsPlaced = false;
+    private  boolean playingGame = false;
 
     public Game() throws ShipNotAvailableException {
 
