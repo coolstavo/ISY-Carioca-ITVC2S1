@@ -106,6 +106,7 @@ public class Moves implements Moveable {
             // Place a hit on the board if the cell is occupied by a ship
             placeMove(row, column, HIT);
 
+
             // Check if the ship is sunk
             for (Ship ship : board.getPlacedShips()) {
                 if (board.isShipSunk(ship)) {
@@ -118,7 +119,7 @@ public class Moves implements Moveable {
         } else {
             // Place a miss on the board
             placeMove(row, column, MISS);
-            System.out.println("It's a Miss!");
+
         }
     }
 
