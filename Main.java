@@ -20,6 +20,7 @@ public class Main {
 
         // Request the list of online players after logging in
         connection.getPlayerList();
+        connection.getGameList();
         connection.closeConnection();
         System.out.println("Application exiting...");
 

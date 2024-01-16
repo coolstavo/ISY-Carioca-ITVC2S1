@@ -158,6 +158,37 @@ public class Connection {
         }
     }
 
+    public void getGameList() {
+        sendCommand("get gamelist");
+
+        try {
+            long timeoutMillis = 5000;  // Set a timeout (5 seconds, adjust as needed)
+            long startTime = System.currentTimeMillis();
+
+            String response;
+            while ((response = in.readLine()) != null) {
+                handleServerResponse(response);
+
+                if (response.startsWith("SVR GAMELIST")) {
+                    Map<String, String> data = parsePlayerList(response);
+                    String gameList = data.get("LIST");
+                    System.out.println("Received games list: " + gameList);
+                    break;
+
+                    // Handle the player list as needed
+                }
+
+                // Check if the timeout has elapsed
+                if (System.currentTimeMillis() - startTime > timeoutMillis) {
+                    System.out.println("Timeout reached. Exiting getPlayerList loop.");
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Parses the player list from the server response.
@@ -170,6 +201,18 @@ public class Connection {
             String[] playerArray = response.substring(15).replaceAll("[\"\\[\\]]", "").split(", ");
             HashMap<String, String> data = new HashMap<>();
             data.put("LIST", String.join(", ", playerArray));
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyMap();
+        }
+    }
+
+    private Map<String, String> parseGameList(String response) {
+        try {
+            String[] gamesArray = response.substring(15).replaceAll("[\"\\[\\]]", "").split(", ");
+            HashMap<String, String> data = new HashMap<>();
+            data.put("LIST", String.join(", ", gamesArray));
             return data;
         } catch (Exception e) {
             e.printStackTrace();
