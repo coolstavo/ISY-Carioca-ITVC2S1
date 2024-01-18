@@ -139,7 +139,7 @@ public class Moves implements Moveable {
         //is ship horizontal?
         if (isHorizontal) k = startColumn;
         else k = startRow;
-        
+
         for (int i = 0; i < ship.getLength() && k + i < length - 1; i++) {
             if (isShipAround(startRow, startColumn)) return true;
 
