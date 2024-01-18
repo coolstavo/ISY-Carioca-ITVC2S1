@@ -99,6 +99,7 @@ public class Moves implements Moveable {
     }
 
     public ArrayList<int[]> getAllNearPositions(int row, int column) {
+        //finds out which positions need to be checked and adds it to an arraylist
         ArrayList<int[]> list = new ArrayList<>();
         //up
         if (row - 1 >= 0) list.add(new int[]{row - 1, column});
@@ -129,13 +130,16 @@ public class Moves implements Moveable {
 
     public boolean isNearShip(Ship ship, int startRow, int startColumn, boolean isHorizontal) {
         /**
-         *
+         * loop through the length of the ship and look if there is a ship in a nearby cell.
+         * @returns true if there is a ship nearby, false if the ship is cleared
          */
         int k;
         int length = ship.getLength();
 
+        //is ship horizontal?
         if (isHorizontal) k = startColumn;
         else k = startRow;
+        
         for (int i = 0; i < ship.getLength() && k + i < length - 1; i++) {
             if (isShipAround(startRow, startColumn)) return true;
 

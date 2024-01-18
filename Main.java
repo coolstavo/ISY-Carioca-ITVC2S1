@@ -12,12 +12,15 @@ public class Main {
         ZeeslagBoard board = new ZeeslagBoard(8, 8);
         Moves moves = new Moves(board);
         Ship P = new Ship("Patrouilleschip");
-        Ship O = new Ship("Onderzeeër");
+        Ship M = new Ship("Mijnenjager");
         Ship S = new Ship("Slagschip");
         Ship V = new Ship("Vliegdekschip");
 
         moves.placeShip(P, 2, 0, true);
-        moves.placeShip(O, 1, 0, true);
+        moves.placeShip(M, 1, 0, true);
+        moves.placeShip(S,0,0, false);
+        moves.placeShip(V,7,0,true);
+
 
         System.out.println(board);
         System.out.println();
