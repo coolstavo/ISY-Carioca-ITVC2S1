@@ -61,33 +61,32 @@ public abstract class Board {
 
     @Override
     public String toString() {
-            StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder();
 
-            int rows = 0;
-            int collumns = 0;
+        int rows = 0;
+        int columns = 0;
 
-            result.append("  ");
+        result.append("  ");
 
-            for (int i = 0; i < this.nrOfColumns; i++) {
-
-                result.append(" ").append(collumns++).append(" ");
-            }
-            result.append('\n');
-
-            // Iterate through the board elements
-            for (List<String> row : this.board) {
-                // Print the values in the current row
-
-                result.append(rows++).append(" ");
-
-                for (String value : row) {
-
-                    result.append("[").append(value).append("]");
-                }
-                result.append("\n");
-
-            }
-
-            return result.toString();
+        for (int i = 0; i < this.nrOfColumns; i++) {
+            result.append(" ").append(columns++).append(" ");
         }
+
+        result.append('\n');
+
+        // Iterate through the board elements
+        for (List<String> row : this.board) {
+
+            // Print the values in the current row
+            result.append(rows++).append(" ");
+
+            for (String value : row) {
+                result.append("[").append(value).append("]");
+            }
+            result.append("\n");
+        }
+
+        return result.toString();
     }
+
+}
