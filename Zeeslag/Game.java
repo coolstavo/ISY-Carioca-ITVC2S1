@@ -117,7 +117,6 @@ public class Game {
             System.out.println("------------------------------------------------");
 
 
-
             System.out.println("Lets play!");
 
             while (!isFinished) {
@@ -145,10 +144,7 @@ public class Game {
                     break;
                 }
             }
-
-
         }
-
     }
 
     public void checkWinner(ZeeslagPlayer player, ZeeslagBoard playBoard) {
