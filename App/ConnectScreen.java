@@ -135,7 +135,7 @@ public class ConnectScreen extends BaseTemplate {
         String serverHost = hostField.getText();
         try {
             int serverPort = Integer.parseInt(portField.getText());
-            Connection serverConnect = new Connection(serverHost, serverPort);
+            Connection serverConnect = new Connection();
 
             if (serverConnect.attemptServerConnection()) {
                 connectionStatusLabel.setText("Verbonden met de server!");
