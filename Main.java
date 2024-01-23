@@ -1,5 +1,8 @@
 import Game.IllegalMoveException;
-import Zeeslag.*;
+import Zeeslag.ZeeslagBoard;
+import Zeeslag.Moves;
+import Zeeslag.Ship;
+import Zeeslag.ShipNotAvailableException;
 
 import java.util.Scanner;
 import Server.Connection;
@@ -7,9 +10,8 @@ import Server.Connection;
 public class Main {
 
     public static void main(String[] args) throws ShipNotAvailableException, IllegalMoveException {
+
         Connection connection = new Connection();
-
-
 
         String playerName = "marty"; // Replace with the desired username
         connection.login(playerName);
@@ -22,8 +24,6 @@ public class Main {
         connection.getPlayerList();
         connection.closeConnection();
         System.out.println("Application exiting...");
-
-
 
     }
 }
