@@ -9,8 +9,6 @@ public class Main {
     public static void main(String[] args) throws ShipNotAvailableException, IllegalMoveException {
         Connection connection = new Connection();
 
-
-
         String playerName = "marty"; // Replace with the desired username
         connection.login(playerName);
 
@@ -22,9 +20,6 @@ public class Main {
         connection.getPlayerList();
         connection.closeConnection();
         System.out.println("Application exiting...");
-
-
-        
 
     }
 }

@@ -1,9 +1,5 @@
 package Game;
 
-import java.util.Scanner;
-
-import Server.Challengeable;
-
 public abstract class Player {
 
     private String name;
