@@ -57,7 +57,20 @@ public class Moves implements Moveable {
 
             if (IsPlacementValid(ship, startRow, startColumn, true)) {
                 // Check if the ship can be placed on the board (horizontal)
-                
+                for (int i = startColumn; i < startColumn + shipLength; i++) {
+
+                    if (startColumn + ship.getLength() > board.getNrOfColumns()) {
+                        throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
+
+                    } else if (!checkMove(startRow, i)) {
+                        throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
+
+                    } else {
+                        placeMove(startRow, i, ship.getRepresentation());  // Set ship type on the board
+                    }
+                }
+
+                board.placeShip(ship);  // Add ship to the list of placed ships
 
             } else {
                 System.out.printf("You cannot place an %s here\n", ship.getType());
