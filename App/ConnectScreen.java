@@ -21,7 +21,6 @@ package App;
 import Server.Connection;
 import javax.swing.*;
 import java.awt.*;
-import java.net.ConnectException;
 
 public class ConnectScreen extends BaseTemplate {
 
@@ -91,6 +90,10 @@ public class ConnectScreen extends BaseTemplate {
         return connectionStatusPanel;
     }
 
+    private PopupMenu createConnectButton() {
+        return null;
+    }
+
 
     /*
      * Method: createStatusLabel
@@ -121,30 +124,30 @@ public class ConnectScreen extends BaseTemplate {
      * Method: createConnectButton
      * Creates and returns the connect button with an action listener to handle button clicks.
      */
-    private JButton createConnectButton() {
-        JButton connectionStatusButton = new JButton("Verbinden");
-        connectionStatusButton.addActionListener(e -> handleConnectButtonClick());
-        return connectionStatusButton;
-    }
+//    private JButton createConnectButton() {
+//        JButton connectionStatusButton = new JButton("Verbinden");
+//        connectionStatusButton.addActionListener(e -> handleConnectButtonClick());
+//        return connectionStatusButton;
+//    }
 
     /*
      * Method: handleConnectButtonClick
      * Handles the connect button click event by attempting a server connection and updating the status label.
      */
-    private void handleConnectButtonClick() {
-        String serverHost = hostField.getText();
-        try {
-            int serverPort = Integer.parseInt(portField.getText());
-            Connection serverConnect = new Connection();
-
-            if (serverConnect.attemptServerConnection()) {
-                connectionStatusLabel.setText("Verbonden met de server!");
-            } else {
-                connectionStatusLabel.setText("Kan niet verbinden met de server: Connection refused");
-            }
-        } catch (NumberFormatException ex) {
-            connectionStatusLabel.setText("Ongeldige poort. Voer een geldig getal in.");
-        }
-    }
+//    private void handleConnectButtonClick() {
+//        String serverHost = hostField.getText();
+//        try {
+//            int serverPort = Integer.parseInt(portField.getText());
+//            Connection serverConnect = new Connection();
+//
+//            if (serverConnect.attemptServerConnection()) {
+//                connectionStatusLabel.setText("Verbonden met de server!");
+//            } else {
+//                connectionStatusLabel.setText("Kan niet verbinden met de server: Connection refused");
+//            }
+//        } catch (NumberFormatException ex) {
+//            connectionStatusLabel.setText("Ongeldige poort. Voer een geldig getal in.");
+//        }
+//    }
 
 }

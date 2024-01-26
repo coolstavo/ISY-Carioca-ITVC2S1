@@ -4,14 +4,15 @@ import Game.Player;
 import Game.IllegalMoveException;
 import java.util.Scanner;
 
-
 public  class ZeeslagPlayer extends Player {
 
     private Moves playMoves;
-    private Moves placeMoves;
+    Moves placeMoves;
 
     private ZeeslagBoard shipPlacementBoard;
     private ZeeslagBoard playBoard;
+
+    //--------------------------------CONSTRUCTOR--------------------------------
 
     public ZeeslagPlayer(String name, Moves playMoves, Moves placeMoves, ZeeslagBoard shipPlacementBoard, ZeeslagBoard playBoard) {
         super(name);
@@ -22,6 +23,8 @@ public  class ZeeslagPlayer extends Player {
         this.shipPlacementBoard = shipPlacementBoard;
         this.playBoard = playBoard;
     }
+
+    //-------------------------------METHODS--------------------------------
 
     public void makeMoveAgainstOpponent(ZeeslagPlayer opponent) throws IllegalMoveException {
         boolean validMove = false;
@@ -75,18 +78,11 @@ public  class ZeeslagPlayer extends Player {
                 playMoves.placeMove(row, column, Moves.HIT);
             }
 
-            // Add any extra logic related to the move
-//            System.out.println(getName()+" playBoard");
-//            System.out.println(playBoard);
-//            System.out.println("------------------------------------------------");
-//            System.out.println(getName()+"s shipBoard");
-//            System.out.println(shipPlacementBoard);
-//            System.out.println("------------------------------------------------");
-
-
-            validMove = true; // Mark the move as valid to exit the loop
+            validMove = true;
         }
     }
+
+    //-------------------------------VALIDATION--------------------------------
 
     private boolean isValidRow(int row) {
         // Add your validation logic for X-coordinate here
@@ -100,5 +96,4 @@ public  class ZeeslagPlayer extends Player {
         // For example, you can check if yCoordinate is within a specific range
         return (column >= 0 && column <= shipPlacementBoard.getNrOfColumns() - 1);
     }
-
 }

@@ -36,7 +36,7 @@ public class Moves implements Moveable {
                 board.getBoard().get(row).get(column).equals(" ")) {
             return true;
         } else {
-            System.out.println("Illegal move: Cell is already occupied or out of bounds" + "(" + row + "," + column + ")");
+//            System.out.println("Illegal move: Cell is already occupied or out of bounds" + "(" + row + "," + column + ")");
             return false;
         }
     }
@@ -51,27 +51,20 @@ public class Moves implements Moveable {
         if (board.isShipAlreadyPlaced(ship)) {
             throw new IllegalMoveException("Ship type already placed " + "(" + ship.getType() + ")" + " You can only place one of each ship type.");
         }
+
 //      checks if placement is valid, if not throws exception.
         if (isHorizontal) {
+
             if (IsPlacementValid(ship, startRow, startColumn, true)) {
                 // Check if the ship can be placed on the board (horizontal)
-                for (int i = startColumn; i < startColumn + shipLength; i++) {
+                
 
-                    if (startColumn + ship.getLength() > board.getNrOfColumns()) {
-                        throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
-
-                    } else if (!checkMove(startRow, i)) {
-                        throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
-
-                    } else {
-                        placeMove(startRow, i, ship.getRepresentation());  // Set ship type on the board
-                    }
-                }
-                board.placeShip(ship);  // Add ship to the list of placed ships
             } else {
                 System.out.printf("You cannot place an %s here\n", ship.getType());
             }
+
         } else {
+
             if (IsPlacementValid(ship, startRow, startColumn, false)) {
                 // Check if the ship can be placed on the board (vertical)
                 for (int i = startRow; i < startRow + shipLength; i++) {
@@ -86,12 +79,16 @@ public class Moves implements Moveable {
                         placeMove(i, startColumn, ship.getRepresentation()); // Set ship type on the board
                     }
                 }
+
                 board.placeShip(ship);  // Add ship to the list of placed ships
+
             } else {
                 System.out.printf("You cannot place an %s here \n", ship.getType());
             }
         }
     }
+
+    //--------------------------------------
 
     public boolean IsPlacementValid(Ship ship, int row, int column, boolean isHorizontal) {
         if (isNearShip(ship, row, column, isHorizontal)) return false;
@@ -149,12 +146,13 @@ public class Moves implements Moveable {
         return false;
     }
 
+    /**
+     * Given a coordinate, checks all surrounding spaces if they are empty
+     * @param startRow of a position
+     * @param startColumn of a position
+     * @return false if all spaces are empty true otherwise
+     */
     private boolean isShipAround(int startRow, int startColumn) {
-        /**
-         * Given a coordinate, checks all surrounding spaces if they are empty
-         * @param Coordinates of a position
-         * @return false if all spaces are empty true otherwise
-         */
 
         //Make a list with all positions that are to be checked
         ArrayList<int[]> list = getAllNearPositions(startRow, startColumn);
@@ -171,19 +169,17 @@ public class Moves implements Moveable {
         return false;
     }
 
+
+    //------------------------------------------------------------------------------
+
     public boolean checkMiss(int row, int column) throws IllegalMoveException {
         // Check if move is withing the board
-        if (board.getBoard().get(row).get(column).equals(" ")) {
-            return true;
-        } else {
-            return false;
-        }
+        return board.getBoard().get(row).get(column).equals("O");
     }
-
 
     public void placeHit(int row, int column) throws IllegalMoveException {
         // Check if the cell is occupied by a ship
-        if (!board.getBoard().get(row).get(column).equals(" ")) {
+        if (!board.getBoard().get(row).get(column).equals("O")) {
             // Place a hit on the board if the cell is occupied by a ship
             placeMove(row, column, HIT);
 
@@ -203,7 +199,6 @@ public class Moves implements Moveable {
 
         }
     }
-
 
     private void markSurroundingArea(Ship ship, int hitRow, int hitColumn) throws IllegalMoveException {
         int shipLength = ship.getLength();
@@ -233,12 +228,15 @@ public class Moves implements Moveable {
                 if (ship.getType().equals("Patrouilleschip")) {
                     rowOffsets = new int[]{-1, -1, -1, -1, 1, 1, 1, 1, 0, 0};
                     colOffsets = new int[]{-1, 0, 1, -shipLength, -1, 0, 1, -shipLength, shipLength - 1, -shipLength};
+
                 } else if (ship.getType().equals("Mijnenjager")) {
                     rowOffsets = new int[]{-1,-1, -1, -1, -1,0, 0, +1,+1, +1, +1, +1};
                     colOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1};
+
                 } else if (ship.getType().equals("Slagschip")) {
                     rowOffsets = new int[]{-1,-1, -1, -1, -1,-1,0, 0, +1,+1, +1, +1, +1,+1};
                     colOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1,-shipLength +1 +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1, -shipLength +1 +1,};
+
                 } else if (ship.getType().equals("Vliegdekschip")) {
                     rowOffsets = new int[]{-1,-1, -1, -1, -1,-1,0, 0, +1,+1, +1, +1, +1,+1, +1,+1,-1,-1};
                     colOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1,-shipLength +1 +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1, -shipLength +1 +1,-shipLength/2 +1, -shipLength/2, -shipLength/2 +1, -shipLength/2};
@@ -248,12 +246,15 @@ public class Moves implements Moveable {
                 if (ship.getType().equals("Patrouilleschip")) {
                     rowOffsets = new int[]{-1, 0, 1, -shipLength, -1, 0, 1, -shipLength, shipLength - 1, -shipLength};
                     colOffsets = new int[]{-1, -1, -1, -1, 1, 1, 1, 1, 0, 0};
+
                 }  else if (ship.getType().equals("Mijnenjager")) {
                     rowOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1};
                     colOffsets = new int[]{-1,-1, -1, -1, -1,0, 0, +1,+1, +1, +1, +1};
+
                 } else if (ship.getType().equals("Slagschip")) {
                     rowOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1,-shipLength +1 +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1, -shipLength +1 +1,};
                     colOffsets = new int[]{-1,-1, -1, -1, -1,-1,0, 0, +1,+1, +1, +1, +1,+1};
+
                 } else if (ship.getType().equals("Vliegdekschip")) {
                     rowOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1,-shipLength +1 +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1, -shipLength +1 +1,-shipLength/2 +1, -shipLength/2, -shipLength/2 +1, -shipLength/2};
                     colOffsets = new int[]{-1,-1, -1, -1, -1,-1,0, 0, +1,+1, +1, +1, +1,+1, +1,+1,-1,-1};;

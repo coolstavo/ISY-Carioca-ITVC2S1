@@ -86,7 +86,6 @@ public class Game {
             System.out.println("Welcome " + player1.getName() + " and " + player2.getName());
             System.out.println("------------------------------------------------");
 
-
             //Ship placement
              if (!shipsPlaced) {
                  System.out.println(player1.getName() + " place your ships!");
@@ -102,7 +101,6 @@ public class Game {
                  System.out.println("------------------------------------------------");
              }
 
-
             // Print the boards
             System.out.println("------------------------------------------------");
             System.out.println("------------------------------------------------");
@@ -115,8 +113,6 @@ public class Game {
             System.out.println("------------------------------------------------");
             System.out.println("------------------------------------------------");
             System.out.println("------------------------------------------------");
-
-
 
             System.out.println("Lets play!");
 
@@ -145,17 +141,13 @@ public class Game {
                     break;
                 }
             }
-
-
         }
-
     }
 
     public void checkWinner(ZeeslagPlayer player, ZeeslagBoard playBoard) {
         if (playBoard.getDestroyedShips().size() == 1) {
             declareWinner(player);
             playingGame = true;
-
         }
     }
 
@@ -164,6 +156,7 @@ public class Game {
     }
 
     public void placeShips(ZeeslagBoard board, Moves moves) throws ShipNotAvailableException, IllegalMoveException {
+
         for (Ship ship : shipsToPlace) {
             boolean shipPlaced = false;
 
@@ -208,14 +201,13 @@ public class Game {
                 } while (column < 0 || column >= board.getNrOfColumns());
 
                 // Place ship
+
                 moves.placeShip(ship, row, column, direction == 1);
 
-                // Ship is placed
                 shipPlaced = true;
 
-//                System.out.println("-----------------------------------------");
-
             }
+
         }
     }
 }
