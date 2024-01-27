@@ -55,7 +55,7 @@ public class ZeeslagBoard extends Board {
         return destroyedShips.contains(ship);
     }
 
-    public boolean allShipsDestroyed(ZeeslagPlayer player, ZeeslagBoard playBoard, List<Ship> shipsToPlace) {
+    public boolean isAllShipsDestroyed(ZeeslagPlayer player, ZeeslagBoard playBoard, List<Ship> shipsToPlace) {
         for (Ship ship : shipsToPlace) {
             if (!playBoard.isShipDestroyed(ship)) {
                 return false;
