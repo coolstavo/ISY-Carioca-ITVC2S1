@@ -208,10 +208,6 @@ public class Moves implements Moveable {
 
     //------------------------------------------------------------------------------
 
-    public boolean checkMiss(int row, int column) throws IllegalMoveException {
-        // Check if move is withing the board
-        return board.getBoard().get(row).get(column).equals("O");
-    }
 
     public void placeMoveBasic (int row, int column, String piece, ZeeslagBoard own, ZeeslagBoard opponent) {
         own.getBoard().get(row).set(column, piece);  // Set the specified piece on the board
