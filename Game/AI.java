@@ -11,5 +11,8 @@ public abstract class AI {
         return name;
     }
 
-
+    @Override
+    public String toString() {
+        return name;
+    }
 }

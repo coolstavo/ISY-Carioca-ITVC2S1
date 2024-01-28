@@ -24,6 +24,7 @@ public class GameOnderzoek {
     private ZeeslagBoard PlayBoardRandomAI;
     private  Moves PlaceMovesRandomAI;
     private  Moves PlayMovesRandomAI;
+    public int roundCount = 0;
 
     // Create ships
     private Ship P;
@@ -35,8 +36,9 @@ public class GameOnderzoek {
     private boolean isFinished = false;
     private  boolean shipsPlaced = false;
     private  boolean playingGame = false;
-    private int roundCount = 0;
+
     CSVLogger logger = new CSVLogger();
+    private String winner = "";
 
     //------------------------------------CONSTRUCTOR-----------------------------------------
 
@@ -53,12 +55,9 @@ public class GameOnderzoek {
     //------------------------------------START-----------------------------------------
 
     public void start() throws ShipNotAvailableException, IllegalMoveException {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 1; i < 101; i++) {
 
             System.out.println("Spel " + i);
-
-            // Log the game number and round count
-            logger.writeLogFile(i, roundCount);
 
             // Reset the game state
             isFinished = false;
@@ -91,6 +90,8 @@ public class GameOnderzoek {
             PlaceMovesRandomAI.placeShip(S, 4, 7, false);
             PlaceMovesRandomAI.placeShip(V, 5, 0, true);
 
+            roundCount = 0;
+
             while (!isFinished) {
                 roundCount++;
                 AI.makeMove(RandomAI);
@@ -102,6 +103,7 @@ public class GameOnderzoek {
                 checkWinner(PlayBoardRandomAI, RandomAI);
 
             }
+            logger.writeLogFile(i, roundCount, winner);
         }
     }
 
@@ -127,6 +129,7 @@ public class GameOnderzoek {
     }
 
     public String declareWinner(ZeeslagAI player) {
-        return "Gefeliciteerd, Player " + player.getName() + " wins!";
+        winner = player.getName();
+        return "Gefeliciteerd, Player " + player.getName() + " wins!" ;
     }
 }

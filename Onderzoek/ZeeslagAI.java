@@ -143,4 +143,9 @@ public class ZeeslagAI extends AI {
             makeRandomMove(opponent);
         }
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }
