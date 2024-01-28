@@ -4,7 +4,6 @@ import Game.Moveable;
 import Game.Board;
 import Game.IllegalMoveException;
 import java.util.ArrayList;
-import Game.*;
 
 public class Moves implements Moveable {
 
@@ -24,10 +23,32 @@ public class Moves implements Moveable {
     //-------------------------------OVERRIDES--------------------------------
 
     @Override
-    public void placeMove(int row, int column, String piece) {
-        board.getBoard().get(row).set(column, piece);  // Set the specified piece on the board
+    public void placeMove(int row, int column, ZeeslagBoard board, ZeeslagBoard opponent) {
+        // Check if the cell is occupied by a ship
+        if (opponent.getBoard().get(row).get(column).equals("M") || opponent.getBoard().get(row).get(column).equals("P") || opponent.getBoard().get(row).get(column).equals("S") || opponent.getBoard().get(row).get(column).equals("V")) {
+            // Place a hit on the board if the cell is occupied by a ship
+            placeMoveBasic(row, column, HIT, board, opponent);
+            System.out.println("HIT!");
+
+            // Check if the ship is sunk
+            for (Ship ship : board.getPlacedShips()) {
+                if (board.isShipSunk(ship)) {
+                    System.out.println("Ship " + ship.getType() + " has been sunk!");
+//                    // Mark the surrounding area with miss marks
+//                    markSurroundingArea(ship, row, column);
+                }
+            }
+        } else {
+            // Place a miss on the board
+            placeMoveBasic(row, column, MISS, board, opponent);
+            System.out.println("MISS!");
+
+        }
     }
 
+    public void placePiece(int row, int column,String piece) {
+        board.getBoard().get(row).set(column, piece);  // Set the specified piece on the board
+    }
 
     @Override
     public boolean checkMove(int row, int column) throws IllegalMoveException {
@@ -66,7 +87,7 @@ public class Moves implements Moveable {
                         throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
 
                     } else {
-                        placeMove(startRow, i, ship.getRepresentation());  // Set ship type on the board
+                        placePiece(startRow, i, ship.getRepresentation());  // Set ship type on the board
                     }
                 }
 
@@ -89,7 +110,7 @@ public class Moves implements Moveable {
                         throw new IllegalMoveException("Invalid ship placement " + "(" + ship.getType() + ")");
 
                     } else {
-                        placeMove(i, startColumn, ship.getRepresentation()); // Set ship type on the board
+                        placePiece(i, startColumn, ship.getRepresentation()); // Set ship type on the board
                     }
                 }
 
@@ -190,27 +211,9 @@ public class Moves implements Moveable {
         return board.getBoard().get(row).get(column).equals("O");
     }
 
-    public void placeHit(int row, int column) throws IllegalMoveException {
-        // Check if the cell is occupied by a ship
-        if (!board.getBoard().get(row).get(column).equals("O")) {
-            // Place a hit on the board if the cell is occupied by a ship
-            placeMove(row, column, HIT);
-
-
-            // Check if the ship is sunk
-            for (Ship ship : board.getPlacedShips()) {
-                if (board.isShipSunk(ship)) {
-                    System.out.println("Ship " + ship.getType() + " has been sunk!");
-
-                    // Mark the surrounding area with miss marks
-                    markSurroundingArea(ship, row, column);
-                }
-            }
-        } else {
-            // Place a miss on the board
-            placeMove(row, column, MISS);
-
-        }
+    public void placeMoveBasic (int row, int column, String piece, ZeeslagBoard own, ZeeslagBoard opponent) {
+        own.getBoard().get(row).set(column, piece);  // Set the specified piece on the board
+        opponent.getBoard().get(row).set(column, piece);  // Set the specified piece on the board
     }
 
     private void markSurroundingArea(Ship ship, int hitRow, int hitColumn) throws IllegalMoveException {
@@ -283,7 +286,7 @@ public class Moves implements Moveable {
                 if (checkMove(row, column)) {
                     // Skip the cell where the ship was hit
                     if (!(row == hitRow && column == hitColumn) && !board.getBoard().get(row).get(column).equals(HIT)) {
-                        placeMove(row, column, MISS);
+                        placePiece(row, column, MISS);
                     }
                 }
             }

@@ -1,4 +1,5 @@
 import Game.IllegalMoveException;
+import Onderzoek.CSVLogger;
 import Onderzoek.GameOnderzoek;
 import Zeeslag.*;
 
@@ -6,11 +7,11 @@ public class Main {
 
     public static void main(String[] args) throws ShipNotAvailableException, IllegalMoveException {
 
-        GameOnderzoek game = new GameOnderzoek();
-//        game.start();
+//        CSVLogger logger = new CSVLogger();
+//        logger.writeLogFile();
 
-        Game game2 = new Game();
-        game2.start();
+        GameOnderzoek game = new GameOnderzoek();
+        game.start();
 
     }
 }

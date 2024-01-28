@@ -6,6 +6,7 @@ import Game.IllegalMoveException;
 import Zeeslag.Moves;
 import Zeeslag.ZeeslagBoard;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class ZeeslagAI extends AI {
@@ -15,7 +16,7 @@ public class ZeeslagAI extends AI {
     private Moves playMoves;
     private Moves placeMoves;
 
-    private ZeeslagBoard shipPlacementBoard;
+    ZeeslagBoard shipPlacementBoard;
     private ZeeslagBoard playBoard;
 
     private int lastHitRow = -1;
@@ -41,24 +42,24 @@ public class ZeeslagAI extends AI {
         while (!validMove) {
             // Generate random row and column values
             Random random = new Random();
-            int row = random.nextInt(shipPlacementBoard.getNrOfRows()- 1);
-            int column = random.nextInt(shipPlacementBoard.getNrOfColumns()- 1);
+            int row = random.nextInt(shipPlacementBoard.getNrOfRows());
+            int column = random.nextInt(shipPlacementBoard.getNrOfColumns());
 
-            // Check the opponent's placement board for a hit or miss
-            if (opponent.placeMoves.checkMiss(row, column)) {
-                System.out.println("It's a MISS!");
-                opponent.placeMoves.placeMove(row, column, Moves.MISS);
+            String currentCellState = opponent.shipPlacementBoard.getPiece(row, column);
 
-                // Update your play board with the result
-                playMoves.placeMove(row, column, Moves.MISS);
-
-            } else {
-                System.out.println("It's a HIT!");
-                opponent.placeMoves.placeHit(row, column);
-
-                // Update your play board with the result
-                playMoves.placeMove(row, column, Moves.HIT);
+            // If the cell is empty or contains a ship, make a move
+            if (currentCellState.equals(" ") || currentCellState.equals("S") ||
+                    currentCellState.equals("M") || currentCellState.equals("P") ||
+                    currentCellState.equals("V")) {
+                playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
             }
+            // If the cell already contains a hit or a miss, do not make a move
+            else if (currentCellState.equals("X") || currentCellState.equals("O")) {
+                // Do nothing
+            } else {
+                playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
+            }
+
 
             validMove = true; // Mark the move as valid to exit the loop
         }
@@ -68,12 +69,13 @@ public class ZeeslagAI extends AI {
 
     public void makeMove(ZeeslagAI opponent) throws IllegalMoveException {
         boolean validMove = false;
+        Random random = new Random();
+        int attempts = 0;
 
-        while (!validMove) {
+        while (!validMove && attempts < 4) {
             int row = lastHitRow;
             int column = lastHitColumn;
 
-            // If there was a previous hit, continue in the current direction
             if (lastHitRow != -1 && lastHitColumn != -1) {
                 switch (direction) {
                     case 0: // right
@@ -90,37 +92,45 @@ public class ZeeslagAI extends AI {
                         break;
                 }
             } else {
-                // If there was no previous hit, generate random row and column values
-                Random random = new Random();
                 row = random.nextInt(shipPlacementBoard.getNrOfRows() - 1);
                 column = random.nextInt(shipPlacementBoard.getNrOfColumns() - 1);
             }
 
-            // Ensure row and column are within the valid range
             row = Math.max(0, Math.min(row, shipPlacementBoard.getNrOfRows() - 1));
             column = Math.max(0, Math.min(column, shipPlacementBoard.getNrOfColumns() - 1));
 
-            // Check the opponent's placement board for a hit or miss
-            if (opponent.placeMoves.checkMiss(row, column)) {
-                System.out.println("It's a MISS!");
-                opponent.placeMoves.placeMove(row, column, Moves.MISS);
-                playMoves.placeMove(row, column, Moves.MISS);
+            String currentCellState = opponent.shipPlacementBoard.getPiece(row, column);
 
-                // If there was a previous hit, switch direction
-                if (lastHitRow != -1 && lastHitColumn != -1) {
-                    direction = (direction + 1) % 4;
-                }
-            } else {
-                System.out.println("It's a HIT!");
-                opponent.placeMoves.placeHit(row, column);
-                playMoves.placeMove(row, column, Moves.HIT);
+            System.out.println("Current cell state: " + currentCellState); // Debugging line
+            System.out.println("Current direction: " + direction); // Debugging line
 
-                // Update the last hit position
+            if (currentCellState.equals(" ")) {
+                playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
                 lastHitRow = row;
                 lastHitColumn = column;
-            }
+                validMove = true;
+                System.out.println("Made a move to: (" + row + ", " + column + ")"); // Debugging line
 
-            validMove = true; // Mark the move as valid to exit the loop
+
+            } else if (currentCellState.equals("X") || currentCellState.equals("O")) {
+                lastHitRow = -1;
+                lastHitColumn = -1;
+                direction = (direction + 1) % 4; // Change direction
+                attempts++;
+
+
+            } else {
+                playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
+                lastHitRow = row;
+                lastHitColumn = column;
+                validMove = true;
+                System.out.println("Made a move to: (" + row + ", " + column + ")"); // Debugging line
+            }
+        }
+
+        if (!validMove) {
+            makeRandomMove(opponent);
         }
     }
+
 }

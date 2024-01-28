@@ -38,6 +38,14 @@ public class ZeeslagBoard extends Board {
         placedShips.add(ship);
     }
 
+    public void addDestroyedShip(Ship ship) {
+        destroyedShips.add(ship);
+    }
+
+    public String getPiece(int row, int column) {
+        return getBoard().get(row).get(column);
+    }
+
     public boolean isShipSunk(Ship ship) {
         for (int row = 0; row < getNrOfRows(); row++) {
             for (int column = 0; column < getNrOfColumns(); column++) {
@@ -46,7 +54,7 @@ public class ZeeslagBoard extends Board {
                 }
             }
         }
-        destroyedShips.add(ship);
+        addDestroyedShip(ship);
         return true;  // The ship is fully hit, so it's sunk
     }
 
@@ -55,12 +63,14 @@ public class ZeeslagBoard extends Board {
         return destroyedShips.contains(ship);
     }
 
-    public boolean isAllShipsDestroyed(ZeeslagPlayer player, ZeeslagBoard playBoard, List<Ship> shipsToPlace) {
-        for (Ship ship : shipsToPlace) {
-            if (!playBoard.isShipDestroyed(ship)) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
+
+//    public boolean isAllShipsDestroyed(ZeeslagPlayer player, ZeeslagBoard playBoard, List<Ship> shipsToPlace) {
+//        for (Ship ship : shipsToPlace) {
+//            if (!playBoard.isShipDestroyed(ship)) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//}

@@ -1,9 +1,11 @@
 package Game;
 
+import Zeeslag.ZeeslagBoard;
+
 public interface Moveable {
 
-    public void placeMove(int row, int column, String piece);
+    void placeMove(int row, int column, ZeeslagBoard own, ZeeslagBoard opponent);
 
-    public boolean checkMove(int row, int column) throws IllegalMoveException;
+    boolean checkMove(int row, int column) throws IllegalMoveException;
 
 }

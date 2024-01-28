@@ -2,6 +2,8 @@ package Zeeslag;
 
 import Game.Player;
 import Game.IllegalMoveException;
+
+import java.util.Objects;
 import java.util.Scanner;
 
 public  class ZeeslagPlayer extends Player {
@@ -62,26 +64,18 @@ public  class ZeeslagPlayer extends Player {
             } while (!isValidColumn(column));
 
 
-            // Check the opponent's placement board for a hit or miss
-            if (opponent.placeMoves.checkMiss(row, column)) {
-                System.out.println("It's a MISS!");
-                opponent.placeMoves.placeMove(row, column, Moves.MISS);
-
-                // Update your play board with the result
-                playMoves.placeMove(row, column, Moves.MISS);
-
+            if (Objects.equals(opponent.shipPlacementBoard.getPiece(row, column), "V") ||
+                    Objects.equals(opponent.shipPlacementBoard.getPiece(row, column), "S") ||
+                    Objects.equals(opponent.shipPlacementBoard.getPiece(row, column), "M") ||
+                    Objects.equals(opponent.shipPlacementBoard.getPiece(row, column), "P")) {
+                placeMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
             } else {
-                System.out.println("It's a HIT!");
-                opponent.placeMoves.placeHit(row, column);
-
-                // Update your play board with the result
-                playMoves.placeMove(row, column, Moves.HIT);
+                placeMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
             }
 
             validMove = true;
         }
     }
-
     //-------------------------------VALIDATION--------------------------------
 
     private boolean isValidRow(int row) {

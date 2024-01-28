@@ -131,7 +131,7 @@ public class Game {
 
                 System.out.println(player2.getName() + " make your move!");
                 player2.makeMoveAgainstOpponent(player1);
-                
+
                 System.out.println("------------------------------------------------");
                 checkWinner(player2, ShipPlacementBoardP1);
                 System.out.println("------------------------------------------------");
