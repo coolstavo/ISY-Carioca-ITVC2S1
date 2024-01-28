@@ -24,8 +24,10 @@ public class Moves implements Moveable {
 
     @Override
     public void placeMove(int row, int column, ZeeslagBoard board, ZeeslagBoard opponent) {
+
+        String cell = opponent.getBoard().get(row).get(column);
         // Check if the cell is occupied by a ship
-        if (opponent.getBoard().get(row).get(column).equals("M") || opponent.getBoard().get(row).get(column).equals("P") || opponent.getBoard().get(row).get(column).equals("S") || opponent.getBoard().get(row).get(column).equals("V")) {
+        if (cell.equals("M") || cell.equals("P") || cell.equals("S") || cell.equals("V")) {
             // Place a hit on the board if the cell is occupied by a ship
             placeMoveBasic(row, column, HIT, board, opponent);
             System.out.println("HIT!");

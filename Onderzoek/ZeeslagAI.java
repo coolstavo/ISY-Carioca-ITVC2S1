@@ -6,6 +6,7 @@ import Game.IllegalMoveException;
 import Zeeslag.Moves;
 import Zeeslag.ZeeslagBoard;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -21,7 +22,7 @@ public class ZeeslagAI extends AI {
 
     private int lastHitRow = -1;
     private int lastHitColumn = -1;
-    private int direction = 0; // 0: right, 1: down, 2: left, 3: up
+    private int direction = 0; // 1:right, 2:down, 3:left, 4:up
 
     //------------------------------------------------------CONSTRUCTOR---------------------------------------------------------
 
@@ -36,7 +37,7 @@ public class ZeeslagAI extends AI {
 
     //------------------------------------------------RANDOM AI---------------------------------------------------------
 
-    public void makeRandomMove(ZeeslagAI opponent) throws IllegalMoveException {
+    public void makeRandomMove(ZeeslagAI opponent) {
         boolean validMove = false;
 
         while (!validMove) {
@@ -67,27 +68,26 @@ public class ZeeslagAI extends AI {
 
     //------------------------------------------------------AI---------------------------------------------------------
 
-    public void makeMove(ZeeslagAI opponent) throws IllegalMoveException {
+    public void makeMove(ZeeslagAI opponent) {
         boolean validMove = false;
         Random random = new Random();
-        int attempts = 0;
 
-        while (!validMove && attempts < 4) {
+        while (!validMove) {
             int row = lastHitRow;
             int column = lastHitColumn;
 
             if (lastHitRow != -1 && lastHitColumn != -1) {
                 switch (direction) {
-                    case 0: // right
+                    case 1: // right
                         column++;
                         break;
-                    case 1: // down
+                    case 2: // down
                         row++;
                         break;
-                    case 2: // left
+                    case 3: // left
                         column--;
                         break;
-                    case 3: // up
+                    case 4: // up
                         row--;
                         break;
                 }
@@ -101,35 +101,25 @@ public class ZeeslagAI extends AI {
 
             String currentCellState = opponent.shipPlacementBoard.getPiece(row, column);
 
-            System.out.println("Current cell state: " + currentCellState); // Debugging line
-            System.out.println("Current direction: " + direction); // Debugging line
+            
+            if (currentCellState.equals(" ")){
+                playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
+                validMove = true;
 
-            if (currentCellState.equals(" ")) {
+            } else if (currentCellState.equals("O")){
+                validMove = true;
+
+            } else if (currentCellState.equals("S") || currentCellState.equals("M") ||
+                    currentCellState.equals("P") || currentCellState.equals("V")) {
                 playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
                 lastHitRow = row;
                 lastHitColumn = column;
-                validMove = true;
-                System.out.println("Made a move to: (" + row + ", " + column + ")"); // Debugging line
-
-
-            } else if (currentCellState.equals("X") || currentCellState.equals("O")) {
-                lastHitRow = -1;
-                lastHitColumn = -1;
-                direction = (direction + 1) % 4; // Change direction
-                attempts++;
-
+                direction++;
 
             } else {
                 playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
-                lastHitRow = row;
-                lastHitColumn = column;
                 validMove = true;
-                System.out.println("Made a move to: (" + row + ", " + column + ")"); // Debugging line
             }
-        }
-
-        if (!validMove) {
-            makeRandomMove(opponent);
         }
     }
 
