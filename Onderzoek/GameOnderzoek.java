@@ -40,24 +40,6 @@ public class GameOnderzoek {
 
     public GameOnderzoek() throws ShipNotAvailableException {
 
-        // Create board + moves for P1
-        this.ShipPlacementBoardAI = new ZeeslagBoard(8, 8);
-        this.PlayBoardAI = new ZeeslagBoard(8, 8);
-
-        this.PlaceMovesAI = new Moves(ShipPlacementBoardAI);
-        this.PlayMovesAI = new Moves(PlayBoardAI);
-
-        //------------------------------------------------
-
-        // Create board + moves for P2
-        this.ShipPlacementBoardRandomAI = new ZeeslagBoard(8, 8);
-        this.PlayBoardRandomAI = new ZeeslagBoard(8, 8);
-
-        this.PlaceMovesRandomAI = new Moves(ShipPlacementBoardRandomAI);
-        this.PlayMovesRandomAI = new Moves(PlayBoardRandomAI);
-
-        //------------------------------------------------
-
         // Create the ships
         this.P = new Ship(Ship.PATROUILLESCHIP);
         this.M = new Ship(Ship.MIJNENJAGER);
@@ -69,61 +51,49 @@ public class GameOnderzoek {
     //------------------------------------START-----------------------------------------
 
     public void start() throws ShipNotAvailableException, IllegalMoveException {
+        for (int i = 0; i < 100; i++) {
 
-        AI = new ZeeslagAI("AI", PlayMovesAI, PlaceMovesAI, ShipPlacementBoardAI, PlayBoardAI);
-        RandomAI = new ZeeslagAI("RandomAI", PlayMovesRandomAI, PlaceMovesRandomAI, ShipPlacementBoardRandomAI, PlayBoardRandomAI);
+            System.out.println("Spel " + i);
+            // Reset the game state
+            isFinished = false;
 
-        PlaceMovesAI.placeShip(P, 1, 1, false);
-        PlaceMovesAI.placeShip(M, 1, 4, true);
-        PlaceMovesAI.placeShip(S, 4, 7, false);
-        PlaceMovesAI.placeShip(V, 5, 0, true);
+            // Create board + moves for P1
+            ShipPlacementBoardAI = new ZeeslagBoard(8, 8);
+            PlayBoardAI = new ZeeslagBoard(8, 8);
 
-        //RandomAI
-        PlaceMovesRandomAI.placeShip(P, 1, 1, false);
-        PlaceMovesRandomAI.placeShip(M, 1, 4, true);
-        PlaceMovesRandomAI.placeShip(S, 4, 7, false);
-        PlaceMovesRandomAI.placeShip(V, 5, 0, true);
+            PlaceMovesAI = new Moves(ShipPlacementBoardAI);
+            PlayMovesAI = new Moves(PlayBoardAI);
 
-        while (!isFinished) {
+            // Create board + moves for P2
+            ShipPlacementBoardRandomAI = new ZeeslagBoard(8, 8);
+            PlayBoardRandomAI = new ZeeslagBoard(8, 8);
 
-            System.out.println("AI's turn");
-            AI.makeMove(RandomAI);
-            System.out.println(ShipPlacementBoardAI);
-            System.out.println(PlayBoardAI);
+            PlaceMovesRandomAI = new Moves(ShipPlacementBoardRandomAI);
+            PlayMovesRandomAI = new Moves(PlayBoardRandomAI);
 
-            if (checkWinner(PlayBoardAI, AI) == 15) {
-                break;
+            AI = new ZeeslagAI("AI", PlayMovesAI, PlaceMovesAI, ShipPlacementBoardAI, PlayBoardAI);
+            RandomAI = new ZeeslagAI("RandomAI", PlayMovesRandomAI, PlaceMovesRandomAI, ShipPlacementBoardRandomAI, PlayBoardRandomAI);
+
+            PlaceMovesAI.placeShip(P, 1, 1, false);
+            PlaceMovesAI.placeShip(M, 1, 4, true);
+            PlaceMovesAI.placeShip(S, 4, 7, false);
+            PlaceMovesAI.placeShip(V, 5, 0, true);
+
+            //RandomAI
+            PlaceMovesRandomAI.placeShip(P, 1, 1, false);
+            PlaceMovesRandomAI.placeShip(M, 1, 4, true);
+            PlaceMovesRandomAI.placeShip(S, 4, 7, false);
+            PlaceMovesRandomAI.placeShip(V, 5, 0, true);
+
+            while (!isFinished) {
+                AI.makeMove(RandomAI);
+                if (checkWinner(PlayBoardAI, AI) == 15) {
+                    break;
+                }
+
+                RandomAI.makeRandomMove(AI);
+                checkWinner(PlayBoardRandomAI, RandomAI);
             }
-
-
-            System.out.println("-----------------------------------");
-            System.out.println("-----------------------------------");
-
-
-            System.out.println("RandomAI's turn");
-            RandomAI.makeRandomMove(AI);
-            System.out.println(ShipPlacementBoardRandomAI);
-            System.out.println(PlayBoardRandomAI);
-            checkWinner(PlayBoardRandomAI, RandomAI);
-
-            System.out.println("-----------------------------------");
-            System.out.println("-----------------------------------");
-
-
-        }
-    }
-
-    //------------------------------------ONDERZOEK-----------------------------------------
-
-
-    public void onderzoekLoop() throws ShipNotAvailableException, IllegalMoveException {
-
-        int aantalSpellen = 0;
-
-        while(aantalSpellen < 100){
-            aantalSpellen++;
-            System.out.println("Spel " + aantalSpellen);
-            start();
         }
     }
 

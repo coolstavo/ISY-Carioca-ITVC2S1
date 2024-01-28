@@ -39,8 +39,9 @@ public class ZeeslagAI extends AI {
 
     public void makeRandomMove(ZeeslagAI opponent) {
         boolean validMove = false;
+        boolean hit = false;
 
-        while (!validMove) {
+        while (!validMove || hit) {
             // Generate random row and column values
             Random random = new Random();
             int row = random.nextInt(shipPlacementBoard.getNrOfRows());
@@ -53,16 +54,22 @@ public class ZeeslagAI extends AI {
                     currentCellState.equals("M") || currentCellState.equals("P") ||
                     currentCellState.equals("V")) {
                 playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
+
+                if (currentCellState.equals("S") || currentCellState.equals("M") ||
+                        currentCellState.equals("P") || currentCellState.equals("V")) {
+                    hit = true;
+                } else {
+                    hit = false;
+                }
+                validMove = true; // Mark the move as valid to exit the loop
             }
             // If the cell already contains a hit or a miss, do not make a move
             else if (currentCellState.equals("X") || currentCellState.equals("O")) {
                 // Do nothing
             } else {
                 playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
+                validMove = true;
             }
-
-
-            validMove = true; // Mark the move as valid to exit the loop
         }
     }
 
@@ -71,8 +78,9 @@ public class ZeeslagAI extends AI {
     public void makeMove(ZeeslagAI opponent) {
         boolean validMove = false;
         Random random = new Random();
+        int attempts = 0;
 
-        while (!validMove) {
+        while (!validMove && attempts < 5) {
             int row = lastHitRow;
             int column = lastHitColumn;
 
@@ -96,31 +104,43 @@ public class ZeeslagAI extends AI {
                 column = random.nextInt(shipPlacementBoard.getNrOfColumns() - 1);
             }
 
-            row = Math.max(0, Math.min(row, shipPlacementBoard.getNrOfRows() - 1));
-            column = Math.max(0, Math.min(column, shipPlacementBoard.getNrOfColumns() - 1));
+            row = Math.max(0, Math.min(row, shipPlacementBoard.getNrOfRows()));
+            column = Math.max(0, Math.min(column, shipPlacementBoard.getNrOfColumns()));
 
-            String currentCellState = opponent.shipPlacementBoard.getPiece(row, column);
+            if (row >= 0 && column >= 0) {
+                String currentCellState = opponent.shipPlacementBoard.getPiece(row, column);
 
-            
-            if (currentCellState.equals(" ")){
-                playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
-                validMove = true;
+                switch (currentCellState) {
 
-            } else if (currentCellState.equals("O")){
-                validMove = true;
+                    case "S":
+                    case "M":
+                    case "P":
+                    case "V":
+                        playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
+                        lastHitRow = row;
+                        lastHitColumn = column;
+                        direction++;
+                        break;
 
-            } else if (currentCellState.equals("S") || currentCellState.equals("M") ||
-                    currentCellState.equals("P") || currentCellState.equals("V")) {
-                playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
-                lastHitRow = row;
-                lastHitColumn = column;
-                direction++;
+                    case "O":
+                    case "X":
+                        direction = (direction % 4) + 1; // Change direction
+                        attempts++;
+                        break;
 
-            } else {
-                playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
-                validMove = true;
+                    default:
+                        playMoves.placeMove(row, column, playBoard, opponent.shipPlacementBoard);
+                        validMove = true;
+                        break;
+                }
             }
         }
-    }
 
+        if (!validMove) {
+            // Reset last hit and make a random move
+            lastHitRow = -1;
+            lastHitColumn = -1;
+            makeRandomMove(opponent);
+        }
+    }
 }
