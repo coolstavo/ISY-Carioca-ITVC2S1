@@ -35,6 +35,8 @@ public class GameOnderzoek {
     private boolean isFinished = false;
     private  boolean shipsPlaced = false;
     private  boolean playingGame = false;
+    private int roundCount = 0;
+    CSVLogger logger = new CSVLogger();
 
     //------------------------------------CONSTRUCTOR-----------------------------------------
 
@@ -54,6 +56,10 @@ public class GameOnderzoek {
         for (int i = 0; i < 100; i++) {
 
             System.out.println("Spel " + i);
+
+            // Log the game number and round count
+            logger.writeLogFile(i, roundCount);
+
             // Reset the game state
             isFinished = false;
 
@@ -86,6 +92,7 @@ public class GameOnderzoek {
             PlaceMovesRandomAI.placeShip(V, 5, 0, true);
 
             while (!isFinished) {
+                roundCount++;
                 AI.makeMove(RandomAI);
                 if (checkWinner(PlayBoardAI, AI) == 15) {
                     break;
@@ -93,6 +100,7 @@ public class GameOnderzoek {
 
                 RandomAI.makeRandomMove(AI);
                 checkWinner(PlayBoardRandomAI, RandomAI);
+
             }
         }
     }
