@@ -1,5 +1,4 @@
 import Game.IllegalMoveException;
-import Onderzoek.CSVLogger;
 import Onderzoek.GameOnderzoek;
 import Zeeslag.*;
 

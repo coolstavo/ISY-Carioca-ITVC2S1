@@ -79,16 +79,16 @@ public class GameOnderzoek {
             AI = new ZeeslagAI("AI", PlayMovesAI, PlaceMovesAI, ShipPlacementBoardAI, PlayBoardAI);
             RandomAI = new ZeeslagAI("RandomAI", PlayMovesRandomAI, PlaceMovesRandomAI, ShipPlacementBoardRandomAI, PlayBoardRandomAI);
 
-            PlaceMovesAI.placeShip(P, 1, 1, false);
-            PlaceMovesAI.placeShip(M, 1, 4, true);
-            PlaceMovesAI.placeShip(S, 4, 7, false);
-            PlaceMovesAI.placeShip(V, 5, 0, true);
+            PlaceMovesAI.placeShip(P, 3, 5, true);
+            PlaceMovesAI.placeShip(M, 1, 3, true);
+            PlaceMovesAI.placeShip(S, 3, 3, false);
+            PlaceMovesAI.placeShip(V, 1, 1, false);
 
             //RandomAI
-            PlaceMovesRandomAI.placeShip(P, 1, 1, false);
-            PlaceMovesRandomAI.placeShip(M, 1, 4, true);
-            PlaceMovesRandomAI.placeShip(S, 4, 7, false);
-            PlaceMovesRandomAI.placeShip(V, 5, 0, true);
+            PlaceMovesRandomAI.placeShip(P, 3, 5, true);
+            PlaceMovesRandomAI.placeShip(M, 1, 3, true);
+            PlaceMovesRandomAI.placeShip(S, 3, 3, false);
+            PlaceMovesRandomAI.placeShip(V, 1, 1, false);
 
             roundCount = 0;
 
