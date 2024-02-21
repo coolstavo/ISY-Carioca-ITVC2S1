@@ -11,11 +11,16 @@ import java.nio.file.StandardOpenOption;
 public class CSVLogger {
 
     public void writeLogFile(int aantalSpellen, int roundCount, String name) {
+
+        // Create a path to the file
         Path path = Paths.get("/Users/gustavocostaaraujo/Documents/College/2ᵉ Jaar/Intelligente systemen I & II/Project Intelligente Systemen I & II/ISY-Carioca-ITVC2S1/Onderzoek/CSVLogger.csv");
+
         // Use try-with-resources to auto-close the file if successfully opened.
         try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND, StandardOpenOption.CREATE)) {
+
             // If the file doesn't exist, create it.
             if (Files.size(path) == 0) {
+
                 // Write the headers if the file is empty
                 writer.write("GameWinner;GameNumber;RoundCount");
                 writer.newLine();

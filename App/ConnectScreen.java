@@ -10,7 +10,7 @@
  * 2. Call the show() method to display the server connection screen.
  *
  * Example:
- *   ConnectScreen serverConnectScreen = new ConnectScreen("Server Connection");
+ *   ConnectScreen serverConnectScreen = new ConnectScreen("Server Server");
  *   serverConnectScreen.show();
  *
  * Note: The default host is set to "localhost" and the default port is set to "7789".
@@ -18,7 +18,6 @@
 
 package App;
 
-import Server.Connection;
 import javax.swing.*;
 import java.awt.*;
 
@@ -138,12 +137,12 @@ public class ConnectScreen extends BaseTemplate {
 //        String serverHost = hostField.getText();
 //        try {
 //            int serverPort = Integer.parseInt(portField.getText());
-//            Connection serverConnect = new Connection();
+//            Server serverConnect = new Server();
 //
 //            if (serverConnect.attemptServerConnection()) {
 //                connectionStatusLabel.setText("Verbonden met de server!");
 //            } else {
-//                connectionStatusLabel.setText("Kan niet verbinden met de server: Connection refused");
+//                connectionStatusLabel.setText("Kan niet verbinden met de server: Server refused");
 //            }
 //        } catch (NumberFormatException ex) {
 //            connectionStatusLabel.setText("Ongeldige poort. Voer een geldig getal in.");

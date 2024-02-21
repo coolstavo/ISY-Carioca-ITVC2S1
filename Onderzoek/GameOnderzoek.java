@@ -34,8 +34,6 @@ public class GameOnderzoek {
 
     // Create boolean to check if the game is finished and if the ships are placed
     private boolean isFinished = false;
-    private  boolean shipsPlaced = false;
-    private  boolean playingGame = false;
 
     CSVLogger logger = new CSVLogger();
     private String winner = "";
@@ -54,7 +52,8 @@ public class GameOnderzoek {
 
     //------------------------------------START-----------------------------------------
 
-    public void start() throws ShipNotAvailableException, IllegalMoveException {
+    public void start() throws IllegalMoveException {
+
         for (int i = 1; i < 101; i++) {
 
             System.out.println("Spel " + i);

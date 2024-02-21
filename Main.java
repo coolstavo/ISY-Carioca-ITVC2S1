@@ -1,13 +1,13 @@
 import Game.IllegalMoveException;
-import Onderzoek.GameOnderzoek;
+import Server.Server;
 import Zeeslag.*;
+
+import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws ShipNotAvailableException, IllegalMoveException {
+    public static void main(String[] args) throws ShipNotAvailableException, IllegalMoveException, IOException {
 
-        GameOnderzoek game = new GameOnderzoek();
-        game.start();
-        
+        Server server = Server.getInstance();
     }
 }
