@@ -58,19 +58,8 @@ public class ZeeslagBoard extends Board {
         return true;  // The ship is fully hit, so it's sunk
     }
 
-
     public boolean isShipDestroyed(Ship ship) {
         return destroyedShips.contains(ship);
     }
 
 }
-
-//    public boolean isAllShipsDestroyed(ZeeslagPlayer player, ZeeslagBoard playBoard, List<Ship> shipsToPlace) {
-//        for (Ship ship : shipsToPlace) {
-//            if (!playBoard.isShipDestroyed(ship)) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-//}

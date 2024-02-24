@@ -65,7 +65,7 @@ public class Moves implements Moveable {
     }
 
 
-    //-------------------------------METHODS--------------------------------
+    //--------------------------------------METHODS--------------------------------------
 
     public void placeShip(Ship ship, int startRow, int startColumn, boolean isHorizontal) throws IllegalMoveException {
         int shipLength = ship.getLength();
@@ -124,7 +124,7 @@ public class Moves implements Moveable {
         }
     }
 
-    //--------------------------------------
+    //--------------------------------------------------------------------------------
 
     public boolean IsPlacementValid(Ship ship, int row, int column, boolean isHorizontal) {
         if (isNearShip(ship, row, column, isHorizontal)) return false;
@@ -182,13 +182,13 @@ public class Moves implements Moveable {
         return false;
     }
 
-    /**
-     * Given a coordinate, checks all surrounding spaces if they are empty
-     * @param startRow of a position
-     * @param startColumn of a position
-     * @return false if all spaces are empty true otherwise
-     */
     private boolean isShipAround(int startRow, int startColumn) {
+        /**
+         * Given a coordinate, checks all surrounding spaces if they are empty
+         * @param startRow of a position
+         * @param startColumn of a position
+         * @return false if all spaces are empty true otherwise
+         */
 
         //Make a list with all positions that are to be checked
         ArrayList<int[]> list = getAllNearPositions(startRow, startColumn);
@@ -205,89 +205,92 @@ public class Moves implements Moveable {
         return false;
     }
 
-
     //------------------------------------------------------------------------------
-
 
     public void placeMoveBasic (int row, int column, String piece, ZeeslagBoard own, ZeeslagBoard opponent) {
         own.getBoard().get(row).set(column, piece);  // Set the specified piece on the board
         opponent.getBoard().get(row).set(column, piece);  // Set the specified piece on the board
     }
 
-    private void markSurroundingArea(Ship ship, int hitRow, int hitColumn) throws IllegalMoveException {
-        int shipLength = ship.getLength();
+    public void placeMoveBasicServer (int row, int column, String piece) {
+        board.getBoard().get(row).set(column, piece);  // Set the specified piece on the board
 
-        // Check if the ship is fully sunk
-        if (board.isShipSunk(ship)) {
-
-            // Infer the ship's orientation based on the ship's length
-            boolean isHorizontal;
-            // Check adjacent cells to determine the ship's orientation
-            if (hitColumn > 0 && board.getBoard().get(hitRow).get(hitColumn - 1).equals(ship.getRepresentation())) {
-                // There is a cell to the left, so it's horizontal
-                isHorizontal = true;
-            } else if (hitColumn + 1 < board.getNrOfColumns() && board.getBoard().get(hitRow).get(hitColumn + 1).equals(ship.getRepresentation())) {
-                // There is a cell to the right, so it's horizontal
-                isHorizontal = true;
-            } else {}
-            isHorizontal = false;
-
-
-            // Initialize rowOffsets and colOffsets with empty arrays
-            int[] rowOffsets = {};
-            int[] colOffsets = {};
-
-            if (isHorizontal) {
-                // Custom offsets for horizontal ship types
-                if (ship.getType().equals("Patrouilleschip")) {
-                    rowOffsets = new int[]{-1, -1, -1, -1, 1, 1, 1, 1, 0, 0};
-                    colOffsets = new int[]{-1, 0, 1, -shipLength, -1, 0, 1, -shipLength, shipLength - 1, -shipLength};
-
-                } else if (ship.getType().equals("Mijnenjager")) {
-                    rowOffsets = new int[]{-1,-1, -1, -1, -1,0, 0, +1,+1, +1, +1, +1};
-                    colOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1};
-
-                } else if (ship.getType().equals("Slagschip")) {
-                    rowOffsets = new int[]{-1,-1, -1, -1, -1,-1,0, 0, +1,+1, +1, +1, +1,+1};
-                    colOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1,-shipLength +1 +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1, -shipLength +1 +1,};
-
-                } else if (ship.getType().equals("Vliegdekschip")) {
-                    rowOffsets = new int[]{-1,-1, -1, -1, -1,-1,0, 0, +1,+1, +1, +1, +1,+1, +1,+1,-1,-1};
-                    colOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1,-shipLength +1 +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1, -shipLength +1 +1,-shipLength/2 +1, -shipLength/2, -shipLength/2 +1, -shipLength/2};
-                }
-            } else if(!isHorizontal) {
-                // Custom offsets for vertical ship types
-                if (ship.getType().equals("Patrouilleschip")) {
-                    rowOffsets = new int[]{-1, 0, 1, -shipLength, -1, 0, 1, -shipLength, shipLength - 1, -shipLength};
-                    colOffsets = new int[]{-1, -1, -1, -1, 1, 1, 1, 1, 0, 0};
-
-                }  else if (ship.getType().equals("Mijnenjager")) {
-                    rowOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1};
-                    colOffsets = new int[]{-1,-1, -1, -1, -1,0, 0, +1,+1, +1, +1, +1};
-
-                } else if (ship.getType().equals("Slagschip")) {
-                    rowOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1,-shipLength +1 +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1, -shipLength +1 +1,};
-                    colOffsets = new int[]{-1,-1, -1, -1, -1,-1,0, 0, +1,+1, +1, +1, +1,+1};
-
-                } else if (ship.getType().equals("Vliegdekschip")) {
-                    rowOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1,-shipLength +1 +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1, -shipLength +1 +1,-shipLength/2 +1, -shipLength/2, -shipLength/2 +1, -shipLength/2};
-                    colOffsets = new int[]{-1,-1, -1, -1, -1,-1,0, 0, +1,+1, +1, +1, +1,+1, +1,+1,-1,-1};;
-                }
-            }
-
-            // Iterate over the offsets
-            for (int i = 0; i < rowOffsets.length; i++) {
-                int row = hitRow + rowOffsets[i];
-                int column = hitColumn + colOffsets[i];
-
-                // Check if the coordinates are within the board boundaries using checkMove
-                if (checkMove(row, column)) {
-                    // Skip the cell where the ship was hit
-                    if (!(row == hitRow && column == hitColumn) && !board.getBoard().get(row).get(column).equals(HIT)) {
-                        placePiece(row, column, MISS);
-                    }
-                }
-            }
-        }
     }
+
+//    private void markSurroundingArea(Ship ship, int hitRow, int hitColumn) throws IllegalMoveException {
+//        int shipLength = ship.getLength();
+//
+//        // Check if the ship is fully sunk
+//        if (board.isShipSunk(ship)) {
+//
+//            // Infer the ship's orientation based on the ship's length
+//            boolean isHorizontal;
+//            // Check adjacent cells to determine the ship's orientation
+//            if (hitColumn > 0 && board.getBoard().get(hitRow).get(hitColumn - 1).equals(ship.getRepresentation())) {
+//                // There is a cell to the left, so it's horizontal
+//                isHorizontal = true;
+//            } else if (hitColumn + 1 < board.getNrOfColumns() && board.getBoard().get(hitRow).get(hitColumn + 1).equals(ship.getRepresentation())) {
+//                // There is a cell to the right, so it's horizontal
+//                isHorizontal = true;
+//            } else {}
+//            isHorizontal = false;
+//
+//
+//            // Initialize rowOffsets and colOffsets with empty arrays
+//            int[] rowOffsets = {};
+//            int[] colOffsets = {};
+//
+//            if (isHorizontal) {
+//                // Custom offsets for horizontal ship types
+//                if (ship.getType().equals("Patrouilleschip")) {
+//                    rowOffsets = new int[]{-1, -1, -1, -1, 1, 1, 1, 1, 0, 0};
+//                    colOffsets = new int[]{-1, 0, 1, -shipLength, -1, 0, 1, -shipLength, shipLength - 1, -shipLength};
+//
+//                } else if (ship.getType().equals("Mijnenjager")) {
+//                    rowOffsets = new int[]{-1,-1, -1, -1, -1,0, 0, +1,+1, +1, +1, +1};
+//                    colOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1};
+//
+//                } else if (ship.getType().equals("Slagschip")) {
+//                    rowOffsets = new int[]{-1,-1, -1, -1, -1,-1,0, 0, +1,+1, +1, +1, +1,+1};
+//                    colOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1,-shipLength +1 +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1, -shipLength +1 +1,};
+//
+//                } else if (ship.getType().equals("Vliegdekschip")) {
+//                    rowOffsets = new int[]{-1,-1, -1, -1, -1,-1,0, 0, +1,+1, +1, +1, +1,+1, +1,+1,-1,-1};
+//                    colOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1,-shipLength +1 +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1, -shipLength +1 +1,-shipLength/2 +1, -shipLength/2, -shipLength/2 +1, -shipLength/2};
+//                }
+//            } else if(!isHorizontal) {
+//                // Custom offsets for vertical ship types
+//                if (ship.getType().equals("Patrouilleschip")) {
+//                    rowOffsets = new int[]{-1, 0, 1, -shipLength, -1, 0, 1, -shipLength, shipLength - 1, -shipLength};
+//                    colOffsets = new int[]{-1, -1, -1, -1, 1, 1, 1, 1, 0, 0};
+//
+//                }  else if (ship.getType().equals("Mijnenjager")) {
+//                    rowOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1};
+//                    colOffsets = new int[]{-1,-1, -1, -1, -1,0, 0, +1,+1, +1, +1, +1};
+//
+//                } else if (ship.getType().equals("Slagschip")) {
+//                    rowOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1,-shipLength +1 +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1, -shipLength +1 +1,};
+//                    colOffsets = new int[]{-1,-1, -1, -1, -1,-1,0, 0, +1,+1, +1, +1, +1,+1};
+//
+//                } else if (ship.getType().equals("Vliegdekschip")) {
+//                    rowOffsets = new int[]{-shipLength,-1, 0, +1, -shipLength +1,-shipLength +1 +1, +1, -shipLength, -shipLength,-1, 0, +1, -shipLength +1, -shipLength +1 +1,-shipLength/2 +1, -shipLength/2, -shipLength/2 +1, -shipLength/2};
+//                    colOffsets = new int[]{-1,-1, -1, -1, -1,-1,0, 0, +1,+1, +1, +1, +1,+1, +1,+1,-1,-1};;
+//                }
+//            }
+//
+//            // Iterate over the offsets
+//            for (int i = 0; i < rowOffsets.length; i++) {
+//                int row = hitRow + rowOffsets[i];
+//                int column = hitColumn + colOffsets[i];
+//
+//                // Check if the coordinates are within the board boundaries using checkMove
+//                if (checkMove(row, column)) {
+//                    // Skip the cell where the ship was hit
+//                    if (!(row == hitRow && column == hitColumn) && !board.getBoard().get(row).get(column).equals(HIT)) {
+//                        placePiece(row, column, MISS);
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
