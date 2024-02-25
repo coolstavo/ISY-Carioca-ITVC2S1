@@ -15,14 +15,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Server {
+public class ServerAI {
 
     //--------------CONNECTION DETAILS---------------
     static String hostName = "localhost";
     static int portNumber = 7789;
 
     //----------------SINGLETON----------------------
-    private volatile static Server INSTANCE;
+    private volatile static ServerAI INSTANCE;
 
     //--------------SOCKET DETAILS-------------------
     private static Socket echoSocket;
@@ -62,15 +62,15 @@ public class Server {
 
     //----------------------------------------------SINGLETON----------------------------------------------------------
 
-    private Server() throws ShipNotAvailableException {
+    private ServerAI() throws ShipNotAvailableException {
         client();
     }
 
-    public static Server getInstance() throws IOException, InterruptedException, ShipNotAvailableException {
+    public static ServerAI getInstance() throws IOException, InterruptedException, ShipNotAvailableException {
         if (INSTANCE == null) {
-            synchronized (Server.class) {
+            synchronized (ServerAI.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new Server();
+                    INSTANCE = new ServerAI();
                 }
             }
         }

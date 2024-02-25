@@ -17,7 +17,7 @@ public class ZeeslagAI extends AI {
     private Moves playMoves;
     private Moves placeMoves;
 
-    ZeeslagBoard shipPlacementBoard;
+    private ZeeslagBoard shipPlacementBoard;
     private ZeeslagBoard playBoard;
 
     private int lastHitRow = -1;
@@ -76,6 +76,7 @@ public class ZeeslagAI extends AI {
     //------------------------------------------------------AI---------------------------------------------------------
 
     public void makeMove(ZeeslagAI opponent) {
+        
         boolean validMove = false;
         Random random = new Random();
         int attempts = 0;

@@ -1,1 +1,0 @@
-https://github.com/jbjdb9/TotMaandag_Othello/blob/main/src/TcReferee.java
