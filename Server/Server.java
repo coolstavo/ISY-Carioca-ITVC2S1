@@ -62,11 +62,11 @@ public class Server {
 
     //----------------------------------------------SINGLETON----------------------------------------------------------
 
-    private Server() throws ShipNotAvailableException {
-        client();
+    private Server() throws ShipNotAvailableException, IOException, InterruptedException, IllegalMoveException {
+        start();
     }
 
-    public static Server getInstance() throws IOException, InterruptedException, ShipNotAvailableException {
+    public static Server getInstance() throws IOException, InterruptedException, ShipNotAvailableException, IllegalMoveException {
         if (INSTANCE == null) {
             synchronized (Server.class) {
                 if (INSTANCE == null) {
@@ -111,6 +111,7 @@ public class Server {
     }
 
     //----------------------------------------------COMMANDS------------------------------------------------------------
+
     public void login() throws IOException {
 
         String response = null;
@@ -642,7 +643,6 @@ public class Server {
         }
     }
 
-
     //-------------------------------------------------TRANSLATORS--------------------------------------------------------
 
     public Map<String, String> parseResponseToMap(String response) {
@@ -683,14 +683,12 @@ public class Server {
 
     //------------------------------------------------CLIENT------------------------------------------------------------
 
-    public void client() {
+    public void start() {
 
         try {
             System.out.println("Connecting to the server...");
             connect(hostName, portNumber);
             startServer();
-
-            Thread.sleep(1000);
 
             while (!loggedIn) {
                 login();
@@ -700,11 +698,11 @@ public class Server {
                 subscribe();
             }
 
-
+        } catch (IllegalMoveException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            System.out.println("An IOException occurred: " + e.getMessage());
-            e.printStackTrace();
-        } catch (InterruptedException | IllegalMoveException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }

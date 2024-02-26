@@ -62,11 +62,11 @@ public class ServerAI {
 
     //----------------------------------------------SINGLETON----------------------------------------------------------
 
-    private ServerAI() throws ShipNotAvailableException {
-        client();
+    private ServerAI() throws ShipNotAvailableException, IOException, InterruptedException, IllegalMoveException {
+        start();
     }
 
-    public static ServerAI getInstance() throws IOException, InterruptedException, ShipNotAvailableException {
+    public static ServerAI getInstance() throws IOException, InterruptedException, ShipNotAvailableException, IllegalMoveException {
         if (INSTANCE == null) {
             synchronized (ServerAI.class) {
                 if (INSTANCE == null) {
@@ -111,6 +111,7 @@ public class ServerAI {
     }
 
     //----------------------------------------------COMMANDS------------------------------------------------------------
+
     public void login() throws IOException {
 
         String response = null;
@@ -216,66 +217,109 @@ public class ServerAI {
         String response = null;
         int[] boatLengths = {6, 4, 3, 2}; // lengths of the boats
 
+        System.out.println("Placing the boats...");
+
         printBoard(placementBoard);
+
 
         for (int length : boatLengths) {
             boatPlaced = false;
 
             while (!boatPlaced) {
-                System.out.println("Where do you want to place your " + length + "-long boat? (Start and end row and column)");
 
-                System.out.println("Enter start row and column (0-7) separated by a comma: ");
-                String startInput = input.nextLine();
-                System.out.println("Enter end row and column (0-7) separated by a comma: ");
-                String endInput = input.nextLine();
+                if (length == 6) {
 
-                String[] startIndices = startInput.split(",");
-                String[] endIndices = endInput.split(",");
-
-                if (startIndices.length != 2 || endIndices.length != 2) {
-                    System.out.println("Please enter two indices separated by a comma.");
-                    continue;
-                }
-
-                try {
-                    int startRow = Integer.parseInt(startIndices[0]);
-                    int startColumn = Integer.parseInt(startIndices[1]);
-                    int endRow = Integer.parseInt(endIndices[0]);
-                    int endColumn = Integer.parseInt(endIndices[1]);
-
-                    if (startRow < 0 || startRow > 7 || startColumn < 0 || startColumn > 7 || endRow < 0 || endRow > 7 || endColumn < 0 || endColumn > 7) {
-                        System.out.println("Rows and columns must be between 0 and 7.");
-                        continue;
-                    }
-
-                    int startIndex = translateToIndex(startRow, startColumn);
-                    int endIndex = translateToIndex(endRow, endColumn);
-
-                    // Determine if the ship should be placed horizontally or vertically
-                    boolean isHorizontal = startRow == endRow;
-
-                    sendCommand("place " + startIndex + " " + endIndex);
+                    sendCommand("place 15 55");
 
                     try {
                         response = in.readLine();
                     } catch (IOException e) {
-                        // Handle exception
+
                     }
+
+                    System.out.println("TEST " + response);
 
                     String[] responseParts = response.split(" ");
 
+
                     if (responseParts[0].equals("OK")) {
                         // Place the ship based on whether it should be horizontal or vertical
-                        placeShip(startIndex, getShipForLength(length), isHorizontal);
+                        placeShip(15, getShipForLength(length), false);
 
                         System.out.println("---------------------------------");
                         boatPlaced = true;
-                    } else if (responseParts[0].equals("ERR")) {
-                        System.out.println("Error from server: " + response);
                     }
-                } catch (NumberFormatException e) {
-                    System.out.println("Indices must be integers.");
+
+                } else if (length == 4) {
+
+                    sendCommand("place 49 52");
+
+                    try {
+                        response = in.readLine();
+                    } catch (IOException e) {
+
+                    }
+
+                    System.out.println("TEST " + response);
+
+                    String[] responseParts = response.split(" ");
+
+
+                    if (responseParts[0].equals("OK")) {
+                        // Place the ship based on whether it should be horizontal or vertical
+                        placeShip(49, getShipForLength(length), true);
+
+                        System.out.println("---------------------------------");
+                        boatPlaced = true;
+                    }
+
+                } else if (length == 3) {
+
+                    sendCommand("place 3 5");
+
+                    try {
+                        response = in.readLine();
+                    } catch (IOException e) {
+
+                    }
+
+                    System.out.println("TEST " + response);
+
+                    String[] responseParts = response.split(" ");
+
+
+                    if (responseParts[0].equals("OK")) {
+                        // Place the ship based on whether it should be horizontal or vertical
+                        placeShip(3, getShipForLength(length), true);
+
+                        System.out.println("---------------------------------");
+                        boatPlaced = true;
+                    }
+
+                } else if (length == 2) {
+
+                    sendCommand("place 18 34");
+
+                    try {
+                        response = in.readLine();
+                    } catch (IOException e) {
+
+                    }
+
+                    System.out.println("TEST " + response);
+
+                    String[] responseParts = response.split(" ");
+
+
+                    if (responseParts[0].equals("OK")) {
+                        // Place the ship based on whether it should be horizontal or vertical
+                        placeShip(18, getShipForLength(length), false);
+
+                        System.out.println("---------------------------------");
+                        boatPlaced = true;
+                    }
                 }
+
             }
         }
 
@@ -490,6 +534,8 @@ public class ServerAI {
                 // Handle exception
             }
 
+            System.out.println("TEST " + response);
+
             if (response == null) {
                 try {
                     Thread.sleep(100);
@@ -502,7 +548,6 @@ public class ServerAI {
             String[] responseParts = response.split(" ");
 
             if (responseParts[0].equals("SVR") && responseParts[1].equals("GAME") && responseParts[2].equals("MATCH")) {
-                System.out.println("Match found!");
 
                 Map<String, String> responseMap = parseResponseToMap(response);
 
@@ -557,6 +602,7 @@ public class ServerAI {
                 // Handle exception
             }
 
+
             if (response == null) {
                 try {
                     Thread.sleep(100);
@@ -565,6 +611,8 @@ public class ServerAI {
                 }
                 continue;
             }
+
+            System.out.println("TEST " + response);
 
             String[] responseParts = response.split(" ");
 
@@ -642,7 +690,6 @@ public class ServerAI {
         }
     }
 
-
     //-------------------------------------------------TRANSLATORS--------------------------------------------------------
 
     public Map<String, String> parseResponseToMap(String response) {
@@ -683,14 +730,12 @@ public class ServerAI {
 
     //------------------------------------------------CLIENT------------------------------------------------------------
 
-    public void client() {
+    public void start() {
 
         try {
             System.out.println("Connecting to the server...");
             connect(hostName, portNumber);
             startServer();
-
-            Thread.sleep(1000);
 
             while (!loggedIn) {
                 login();
@@ -700,11 +745,11 @@ public class ServerAI {
                 subscribe();
             }
 
-
+        } catch (IllegalMoveException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            System.out.println("An IOException occurred: " + e.getMessage());
-            e.printStackTrace();
-        } catch (InterruptedException | IllegalMoveException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
